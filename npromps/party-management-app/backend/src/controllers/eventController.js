@@ -5,10 +5,15 @@ import { createEventSchema, updateEventSchema } from '../validations/eventValida
 
 // Crear un nuevo evento
 export const createEvent = asyncHandler(async (req, res) => {
+    console.log('Datos recibidos:', req.body);
+    console.log('Usuario:', req.user);
+
     const eventData = {
         ...req.body,
         organizer: req.user._id
     };
+
+    console.log('Datos del evento:', eventData);
 
     const event = new Event(eventData);
     await event.save();

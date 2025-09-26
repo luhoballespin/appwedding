@@ -17,6 +17,14 @@ import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import ProviderPanel from './pages/ProviderPanel';
 import UserProfile from './pages/UserProfile';
+import CreateEvent from './pages/CreateEvent';
+import EventList from './pages/EventList';
+import EventDetail from './pages/EventDetail';
+import ProviderDashboard from './pages/ProviderDashboard';
+import CreateProduct from './pages/CreateProduct';
+import ProviderCatalog from './pages/ProviderCatalog';
+import ProviderDetail from './pages/ProviderDetail';
+import ProviderBooking from './pages/ProviderBooking';
 
 // Protected Route Component
 import ProtectedRoute from './components/ProtectedRoute';
@@ -38,7 +46,9 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
-                <Route path="/providers" element={<div>Providers Page</div>} />
+                <Route path="/providers" element={<ProviderCatalog />} />
+                <Route path="/providers/:providerId" element={<ProviderDetail />} />
+                <Route path="/providers/:providerId/booking" element={<ProviderBooking />} />
                 <Route path="/about" element={<div>About Page</div>} />
 
                 {/* Protected Routes */}
@@ -52,10 +62,28 @@ function App() {
                 />
 
                 <Route
-                  path="/events/*"
+                  path="/events"
                   element={
                     <ProtectedRoute>
-                      <div>Events Pages</div>
+                      <EventList />
+                    </ProtectedRoute>
+                  }
+                />
+
+                <Route
+                  path="/events/create"
+                  element={
+                    <ProtectedRoute>
+                      <CreateEvent />
+                    </ProtectedRoute>
+                  }
+                />
+
+                <Route
+                  path="/events/:eventId"
+                  element={
+                    <ProtectedRoute>
+                      <EventDetail />
                     </ProtectedRoute>
                   }
                 />
@@ -64,7 +92,16 @@ function App() {
                   path="/provider-dashboard"
                   element={
                     <ProtectedRoute allowedRoles={['proveedor']}>
-                      <ProviderPanel />
+                      <ProviderDashboard />
+                    </ProtectedRoute>
+                  }
+                />
+
+                <Route
+                  path="/provider/products/create"
+                  element={
+                    <ProtectedRoute allowedRoles={['proveedor']}>
+                      <CreateProduct />
                     </ProtectedRoute>
                   }
                 />

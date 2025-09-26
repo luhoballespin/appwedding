@@ -18,17 +18,21 @@ import { es } from 'date-fns/locale';
 const Dashboard = () => {
   const { user, isOrganizer } = useAuth();
   const {
-    events,
-    getEventStats,
-    getUpcomingEvents,
-    getEventsByStatus
+    events
   } = useEvents();
 
   const [activeTab, setActiveTab] = useState('overview');
 
-  const stats = getEventStats();
-  const upcomingEvents = getUpcomingEvents();
-  const planningEvents = getEventsByStatus('planning');
+  // Calcular estadísticas
+  const stats = {
+    total: events.length,
+    upcoming: events.filter(event => new Date(event.date) >= new Date()).length,
+    planning: events.filter(event => event.status === 'planning').length,
+    confirmed: events.filter(event => event.status === 'confirmed').length
+  };
+
+  const upcomingEvents = events.filter(event => new Date(event.date) >= new Date());
+  const planningEvents = events.filter(event => event.status === 'planning');
 
   const getGreeting = () => {
     const hour = new Date().getHours();
@@ -225,9 +229,14 @@ const Dashboard = () => {
                       <div className="text-center py-8">
                         <CalendarDaysIcon className="w-12 h-12 text-secondary-300 mx-auto mb-4" />
                         <p className="text-secondary-500 mb-4">No tienes eventos próximos</p>
-                        <Link to="/events/create" className="btn-outline btn-sm">
-                          Crear tu primer evento
-                        </Link>
+                        <div className="flex flex-col sm:flex-row gap-3">
+                          <Link to="/events/create" className="btn-outline btn-sm">
+                            Crear tu primer evento
+                          </Link>
+                          <Link to="/events" className="btn-ghost btn-sm">
+                            Ver todos los eventos
+                          </Link>
+                        </div>
                       </div>
                     )}
                   </div>
@@ -304,9 +313,14 @@ const Dashboard = () => {
                       <p className="text-secondary-500 mb-6">
                         Crea tu primer evento para comenzar a planificar
                       </p>
-                      <Link to="/events/create" className="btn-primary">
-                        Crear Evento
-                      </Link>
+                      <div className="flex flex-col sm:flex-row gap-3">
+                        <Link to="/events/create" className="btn-primary">
+                          Crear Evento
+                        </Link>
+                        <Link to="/events" className="btn-ghost">
+                          Ver todos los eventos
+                        </Link>
+                      </div>
                     </div>
                   )}
                 </div>
@@ -342,10 +356,10 @@ const Dashboard = () => {
                                 Planificación
                               </span>
                               <Link
-                                to={`/events/${event._id}/edit`}
+                                to={`/events/${event._id}`}
                                 className="btn-primary btn-sm"
                               >
-                                Continuar
+                                Ver Detalles
                               </Link>
                             </div>
                           </div>

@@ -5,6 +5,8 @@ import { config } from '../config/index.js';
 export const authenticate = async (req, res, next) => {
     try {
         const token = req.header('Authorization')?.replace('Bearer ', '');
+        console.log('Token recibido:', token ? 'Presente' : 'Ausente');
+        console.log('Headers:', req.headers);
 
         if (!token) {
             return res.status(401).json({
