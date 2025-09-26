@@ -1,15 +1,58 @@
-const express = require('express');
+import express from 'express';
+import {
+  createProvider,
+  getProviders,
+  getProviderById,
+  updateProvider,
+  deleteProvider,
+  searchProviders,
+  getProviderRequests,
+  updateRequestStatus
+} from '../controllers/providerController.js';
+import { authenticate } from '../middleware/authMiddleware.js';
+import { authorize } from '../middleware/roleMiddleware.js';
+import { validate } from '../middleware/validation.js';
+import { createProviderSchema, updateProviderSchema } from '../validations/providerValidation.js';
+
 const router = express.Router();
-const providerController = require('../controllers/providerController');
-const authMiddleware = require('../middleware/authMiddleware');
-const roleMiddleware = require('../middleware/roleMiddleware');
 
-// Rutas para proveedores
-router.post('/', authMiddleware.verifyToken, roleMiddleware.isProvider, providerController.createProvider);
-router.get('/', providerController.getAllProviders);
-router.get('/:id', providerController.getProviderById);
-router.put('/:id', authMiddleware.verifyToken, roleMiddleware.isProvider, providerController.updateProvider);
-router.delete('/:id', authMiddleware.verifyToken, roleMiddleware.isProvider, providerController.deleteProvider);
-router.get('/:id/requests', authMiddleware.verifyToken, roleMiddleware.isProvider, providerController.getRequests);
+// Rutas públicas
+router.get('/', getProviders);
+router.get('/search', searchProviders);
+router.get('/:id', getProviderById);
 
-module.exports = router;
+// Rutas protegidas para proveedores
+router.post('/',
+  authenticate,
+  authorize('proveedor'),
+  validate(createProviderSchema),
+  createProvider
+);
+
+router.put('/:id',
+  authenticate,
+  authorize('proveedor'),
+  validate(updateProviderSchema),
+  updateProvider
+);
+
+router.delete('/:id',
+  authenticate,
+  authorize('proveedor'),
+  deleteProvider
+);
+
+// Rutas específicas para proveedores autenticados
+router.get('/my/requests',
+  authenticate,
+  authorize('proveedor'),
+  getProviderRequests
+);
+
+router.put('/requests/:requestId',
+  authenticate,
+  authorize('proveedor'),
+  updateRequestStatus
+);
+
+export default router;

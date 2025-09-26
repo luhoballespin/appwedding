@@ -1,26 +1,77 @@
-const jwt = require('jsonwebtoken');
-const User = require('../models/User');
-
-const roleMiddleware = (roles) => {
-    return async (req, res, next) => {
-        try {
-            const token = req.headers.authorization?.split(' ')[1];
-            if (!token) {
-                return res.status(403).json({ message: 'No token provided' });
-            }
-
-            const decoded = jwt.verify(token, process.env.JWT_SECRET);
-            req.user = await User.findById(decoded.id).select('-password');
-
-            if (!roles.includes(req.user.role)) {
-                return res.status(403).json({ message: 'Access denied' });
-            }
-
-            next();
-        } catch (error) {
-            return res.status(401).json({ message: 'Unauthorized' });
+export const authorize = (...roles) => {
+    return (req, res, next) => {
+        if (!req.user) {
+            return res.status(401).json({
+                success: false,
+                message: 'Acceso denegado. Autenticación requerida.'
+            });
         }
+
+        if (!roles.includes(req.user.role)) {
+            return res.status(403).json({
+                success: false,
+                message: 'Acceso denegado. Permisos insuficientes.'
+            });
+        }
+
+        next();
     };
 };
 
-module.exports = roleMiddleware;
+export const authorizeSelfOrAdmin = (req, res, next) => {
+    if (!req.user) {
+        return res.status(401).json({
+            success: false,
+            message: 'Acceso denegado. Autenticación requerida.'
+        });
+    }
+
+    const resourceUserId = req.params.userId || req.params.id;
+
+    if (req.user.role === 'admin' || req.user._id.toString() === resourceUserId) {
+        next();
+    } else {
+        return res.status(403).json({
+            success: false,
+            message: 'Acceso denegado. Solo puedes acceder a tus propios recursos.'
+        });
+    }
+};
+
+export const authorizeProvider = (req, res, next) => {
+    if (!req.user) {
+        return res.status(401).json({
+            success: false,
+            message: 'Acceso denegado. Autenticación requerida.'
+        });
+    }
+
+    if (req.user.role !== 'proveedor') {
+        return res.status(403).json({
+            success: false,
+            message: 'Acceso denegado. Solo los proveedores pueden acceder a este recurso.'
+        });
+    }
+
+    next();
+};
+
+export const authorizeOrganizer = (req, res, next) => {
+    if (!req.user) {
+        return res.status(401).json({
+            success: false,
+            message: 'Acceso denegado. Autenticación requerida.'
+        });
+    }
+
+    const organizerRoles = ['cumpleañero', 'planeador_bodas', 'organizador'];
+
+    if (!organizerRoles.includes(req.user.role)) {
+        return res.status(403).json({
+            success: false,
+            message: 'Acceso denegado. Solo los organizadores pueden acceder a este recurso.'
+        });
+    }
+
+    next();
+};

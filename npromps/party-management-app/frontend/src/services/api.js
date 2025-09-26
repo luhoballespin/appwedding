@@ -1,6 +1,7 @@
 import axios from 'axios';
+import toast from 'react-hot-toast';
 
-const API_URL = 'http://localhost:5000/api'; // Cambia el puerto según tu configuración
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
 
 // Configuración de Axios
 const api = axios.create({
@@ -8,52 +9,221 @@ const api = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
+  timeout: 10000, // 10 segundos timeout
 });
 
-// Función para registrar un nuevo usuario
-export const registerUser = async (userData) => {
-  const response = await api.post('/auth/register', userData);
-  return response.data;
+// Interceptor para agregar token automáticamente
+api.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+// Interceptor para manejar respuestas y errores
+api.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
+    if (error.response?.status === 401) {
+      // Token expirado o inválido
+      localStorage.removeItem('token');
+      window.location.href = '/login';
+      toast.error('Sesión expirada. Por favor inicia sesión nuevamente.');
+    } else if (error.response?.status === 403) {
+      toast.error('No tienes permisos para realizar esta acción.');
+    } else if (error.response?.status === 429) {
+      toast.error('Demasiadas solicitudes. Intenta más tarde.');
+    } else if (error.response?.status >= 500) {
+      toast.error('Error del servidor. Intenta más tarde.');
+    }
+
+    return Promise.reject(error);
+  }
+);
+
+// Servicios de autenticación
+export const authService = {
+  login: async (credentials) => {
+    const response = await api.post('/auth/login', credentials);
+    return response.data;
+  },
+
+  register: async (userData) => {
+    const response = await api.post('/auth/register', userData);
+    return response.data;
+  },
+
+  getCurrentUser: async () => {
+    const response = await api.get('/auth/profile');
+    return response.data;
+  },
+
+  updateProfile: async (profileData) => {
+    const response = await api.put('/users/profile', profileData);
+    return response.data;
+  },
+
+  changePassword: async (passwordData) => {
+    const response = await api.put('/users/change-password', passwordData);
+    return response.data;
+  },
+
+  forgotPassword: async (email) => {
+    const response = await api.post('/auth/forgot-password', { email });
+    return response.data;
+  },
+
+  resetPassword: async (token, password) => {
+    const response = await api.post('/auth/reset-password', { token, password });
+    return response.data;
+  }
 };
 
-// Función para iniciar sesión
-export const loginUser = async (credentials) => {
-  const response = await api.post('/auth/login', credentials);
-  return response.data;
+// Servicios de eventos
+export const eventService = {
+  getUserEvents: async () => {
+    const response = await api.get('/events');
+    return response.data;
+  },
+
+  getEventById: async (eventId) => {
+    const response = await api.get(`/events/${eventId}`);
+    return response.data;
+  },
+
+  createEvent: async (eventData) => {
+    const response = await api.post('/events', eventData);
+    return response.data;
+  },
+
+  updateEvent: async (eventId, eventData) => {
+    const response = await api.put(`/events/${eventId}`, eventData);
+    return response.data;
+  },
+
+  deleteEvent: async (eventId) => {
+    const response = await api.delete(`/events/${eventId}`);
+    return response.data;
+  },
+
+  addGuest: async (eventId, guestData) => {
+    const response = await api.post(`/events/${eventId}/guests`, guestData);
+    return response.data;
+  },
+
+  updateGuestStatus: async (eventId, guestId, status) => {
+    const response = await api.put(`/events/${eventId}/guests/${guestId}`, { status });
+    return response.data;
+  },
+
+  addChecklistItem: async (eventId, taskData) => {
+    const response = await api.post(`/events/${eventId}/checklist`, taskData);
+    return response.data;
+  },
+
+  completeChecklistItem: async (eventId, taskId) => {
+    const response = await api.put(`/events/${eventId}/checklist/${taskId}/complete`);
+    return response.data;
+  },
+
+  addProvider: async (eventId, providerData) => {
+    const response = await api.post(`/events/${eventId}/providers`, providerData);
+    return response.data;
+  }
 };
 
-// Función para obtener eventos
-export const getEvents = async () => {
-  const response = await api.get('/events');
-  return response.data;
+// Servicios de proveedores
+export const providerService = {
+  getProviders: async (params = {}) => {
+    const response = await api.get('/providers', { params });
+    return response.data;
+  },
+
+  getProviderById: async (providerId) => {
+    const response = await api.get(`/providers/${providerId}`);
+    return response.data;
+  },
+
+  createProvider: async (providerData) => {
+    const response = await api.post('/providers', providerData);
+    return response.data;
+  },
+
+  updateProvider: async (providerId, providerData) => {
+    const response = await api.put(`/providers/${providerId}`, providerData);
+    return response.data;
+  },
+
+  deleteProvider: async (providerId) => {
+    const response = await api.delete(`/providers/${providerId}`);
+    return response.data;
+  },
+
+  searchProviders: async (searchParams) => {
+    const response = await api.get('/providers/search', { params: searchParams });
+    return response.data;
+  },
+
+  getProviderRequests: async (providerId) => {
+    const response = await api.get(`/providers/${providerId}/requests`);
+    return response.data;
+  },
+
+  updateRequestStatus: async (providerId, requestId, status) => {
+    const response = await api.put(`/providers/${providerId}/requests/${requestId}`, { status });
+    return response.data;
+  }
 };
 
-// Función para crear un nuevo evento
-export const createEvent = async (eventData, token) => {
-  const response = await api.post('/events', eventData, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
-  return response.data;
+// Servicios de usuarios
+export const userService = {
+  getUserProfile: async () => {
+    const response = await api.get('/users/profile');
+    return response.data;
+  },
+
+  updateUserProfile: async (profileData) => {
+    const response = await api.put('/users/profile', profileData);
+    return response.data;
+  },
+
+  uploadAvatar: async (file) => {
+    const formData = new FormData();
+    formData.append('avatar', file);
+
+    const response = await api.post('/users/avatar', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return response.data;
+  },
+
+  deleteAccount: async () => {
+    const response = await api.delete('/users/account');
+    return response.data;
+  }
 };
 
-// Función para obtener proveedores
-export const getProviders = async () => {
-  const response = await api.get('/providers');
-  return response.data;
+// Utilidades
+export const apiUtils = {
+  handleError: (error) => {
+    const message = error.response?.data?.message || error.message || 'Error desconocido';
+    toast.error(message);
+    return message;
+  },
+
+  getErrorMessage: (error) => {
+    return error.response?.data?.message || error.message || 'Error desconocido';
+  }
 };
 
-// Función para crear un nuevo proveedor
-export const createProvider = async (providerData, token) => {
-  const response = await api.post('/providers', providerData, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
-  return response.data;
-};
-
-// Función para obtener el perfil del usuario
-export const getUserProfile = async (token) => {
-  const response = await api.get('/users/profile', {
-    headers: { Authorization: `Bearer ${token}` },
-  });
-  return response.data;
-};
+export default api;

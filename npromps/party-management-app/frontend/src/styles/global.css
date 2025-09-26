@@ -1,70 +1,296 @@
-body {
-    margin: 0;
-    font-family: 'Arial', sans-serif;
-    background-color: #f4f4f4;
-    color: #333;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&family=Cormorant+Garamond:wght@300;400;500;600;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+  
+  body {
+    @apply bg-gradient-to-br from-primary-50 via-white to-secondary-50 min-h-screen;
+    @apply text-secondary-900 antialiased;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+    @apply font-semibold text-secondary-900;
+  }
+  
+  h1 {
+    @apply text-4xl md:text-5xl lg:text-6xl;
+  }
+  
+  h2 {
+    @apply text-3xl md:text-4xl lg:text-5xl;
+  }
+  
+  h3 {
+    @apply text-2xl md:text-3xl lg:text-4xl;
+  }
+  
+  h4 {
+    @apply text-xl md:text-2xl lg:text-3xl;
+  }
+  
+  h5 {
+    @apply text-lg md:text-xl lg:text-2xl;
+  }
+  
+  h6 {
+    @apply text-base md:text-lg lg:text-xl;
+  }
 }
 
-header {
-    background: #007acc;
-    color: #fff;
-    padding: 10px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+@layer components {
+  /* Botones elegantes */
+  .btn {
+    @apply inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  
+  .btn-primary {
+    @apply btn bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5;
+  }
+  
+  .btn-secondary {
+    @apply btn bg-secondary-100 text-secondary-700 hover:bg-secondary-200 focus:ring-secondary-500 border-secondary-200;
+  }
+  
+  .btn-accent {
+    @apply btn bg-accent-500 text-white hover:bg-accent-600 focus:ring-accent-500 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5;
+  }
+  
+  .btn-outline {
+    @apply btn border-2 border-primary-600 text-primary-600 hover:bg-primary-600 hover:text-white focus:ring-primary-500;
+  }
+  
+  .btn-ghost {
+    @apply btn text-secondary-600 hover:bg-secondary-100 focus:ring-secondary-500;
+  }
+  
+  .btn-sm {
+    @apply px-4 py-2 text-sm;
+  }
+  
+  .btn-lg {
+    @apply px-8 py-4 text-lg;
+  }
+  
+  /* Cards elegantes */
+  .card {
+    @apply bg-white rounded-2xl shadow-soft border border-secondary-100 overflow-hidden transition-all duration-300 hover:shadow-medium hover:-translate-y-1;
+  }
+  
+  .card-header {
+    @apply px-6 py-4 border-b border-secondary-100 bg-gradient-to-r from-primary-50 to-secondary-50;
+  }
+  
+  .card-body {
+    @apply px-6 py-4;
+  }
+  
+  .card-footer {
+    @apply px-6 py-4 border-t border-secondary-100 bg-secondary-50;
+  }
+  
+  /* Formularios elegantes */
+  .form-group {
+    @apply mb-6;
+  }
+  
+  .form-label {
+    @apply block text-sm font-semibold text-secondary-700 mb-2;
+  }
+  
+  .form-input {
+    @apply w-full px-4 py-3 border border-secondary-200 rounded-xl text-secondary-900 placeholder-secondary-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200;
+  }
+  
+  .form-textarea {
+    @apply form-input resize-none;
+  }
+  
+  .form-select {
+    @apply form-input appearance-none bg-white;
+  }
+  
+  .form-error {
+    @apply mt-2 text-sm text-danger-600;
+  }
+  
+  .form-help {
+    @apply mt-2 text-sm text-secondary-500;
+  }
+  
+  /* Navegación elegante */
+  .nav-link {
+    @apply px-4 py-2 text-secondary-600 hover:text-primary-600 font-medium transition-colors duration-200 relative;
+  }
+  
+  .nav-link.active {
+    @apply text-primary-600;
+  }
+  
+  .nav-link.active::after {
+    @apply content-[''] absolute bottom-0 left-0 right-0 h-0.5 bg-primary-600;
+  }
+  
+  /* Badges y etiquetas */
+  .badge {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium;
+  }
+  
+  .badge-primary {
+    @apply badge bg-primary-100 text-primary-800;
+  }
+  
+  .badge-secondary {
+    @apply badge bg-secondary-100 text-secondary-800;
+  }
+  
+  .badge-success {
+    @apply badge bg-success-100 text-success-800;
+  }
+  
+  .badge-warning {
+    @apply badge bg-warning-100 text-warning-800;
+  }
+  
+  .badge-danger {
+    @apply badge bg-danger-100 text-danger-800;
+  }
+  
+  /* Estados de carga */
+  .loading {
+    @apply animate-pulse;
+  }
+  
+  .loading-spinner {
+    @apply animate-spin rounded-full border-2 border-secondary-200 border-t-primary-600;
+  }
+  
+  /* Efectos de gradiente */
+  .gradient-primary {
+    @apply bg-gradient-to-r from-primary-500 to-primary-700;
+  }
+  
+  .gradient-secondary {
+    @apply bg-gradient-to-r from-secondary-500 to-secondary-700;
+  }
+  
+  .gradient-accent {
+    @apply bg-gradient-to-r from-accent-400 to-accent-600;
+  }
+  
+  /* Sombras especiales */
+  .shadow-glow {
+    @apply shadow-glow;
+  }
+  
+  .shadow-glow-lg {
+    @apply shadow-glow-lg;
+  }
+  
+  /* Transiciones suaves */
+  .transition-smooth {
+    @apply transition-all duration-300 ease-in-out;
+  }
+  
+  /* Contenedores responsivos */
+  .container-elegant {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+  
+  .container-narrow {
+    @apply max-w-4xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+  
+  /* Grids elegantes */
+  .grid-elegant {
+    @apply grid gap-6 md:gap-8;
+  }
+  
+  .grid-2 {
+    @apply grid-elegant grid-cols-1 md:grid-cols-2;
+  }
+  
+  .grid-3 {
+    @apply grid-elegant grid-cols-1 md:grid-cols-2 lg:grid-cols-3;
+  }
+  
+  .grid-4 {
+    @apply grid-elegant grid-cols-1 md:grid-cols-2 lg:grid-cols-4;
+  }
 }
 
-header h1 {
-    margin: 0;
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .backdrop-blur-xs {
+    backdrop-filter: blur(2px);
+  }
 }
 
-nav a {
-    color: #fff;
-    text-decoration: none;
-    margin: 0 15px;
+/* Animaciones personalizadas */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
 }
 
-nav a:hover {
-    text-decoration: underline;
+.float-animation {
+  animation: float 3s ease-in-out infinite;
 }
 
-main {
-    padding: 20px;
+/* Estilos para react-big-calendar */
+.rbc-calendar {
+  @apply bg-white rounded-2xl shadow-soft border border-secondary-100;
 }
 
-footer {
-    background: #333;
-    color: #fff;
-    text-align: center;
-    padding: 10px 0;
-    position: relative;
-    bottom: 0;
-    width: 100%;
+.rbc-header {
+  @apply bg-gradient-to-r from-primary-50 to-secondary-50 text-secondary-700 font-semibold py-3;
 }
 
-.card {
-    background: #fff;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 15px;
-    margin: 10px 0;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+.rbc-today {
+  @apply bg-primary-50;
 }
 
-.card img {
-    max-width: 100%;
-    border-radius: 5px;
+.rbc-event {
+  @apply bg-primary-500 border-primary-600 text-white rounded-lg;
 }
 
-.button {
-    background: #007acc;
-    color: #fff;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 5px;
-    cursor: pointer;
+.rbc-event:hover {
+  @apply bg-primary-600;
 }
 
-.button:hover {
-    background: #005fa3;
+/* Estilos para react-hot-toast */
+.toast-success {
+  @apply bg-success-500 text-white;
+}
+
+.toast-error {
+  @apply bg-danger-500 text-white;
+}
+
+.toast-warning {
+  @apply bg-warning-500 text-white;
+}
+
+.toast-info {
+  @apply bg-primary-500 text-white;
 }

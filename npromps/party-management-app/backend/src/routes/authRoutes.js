@@ -1,18 +1,24 @@
-const express = require('express');
-const { register, login } = require('../controllers/authController');
-const { authenticate } = require('../middleware/authMiddleware');
+import express from 'express';
+import {
+    register,
+    login,
+    getProfile,
+    logout,
+    verifyToken
+} from '../controllers/authController.js';
+import { authenticate } from '../middleware/authMiddleware.js';
+import { validate } from '../middleware/validation.js';
+import { registerSchema, loginSchema } from '../validations/userValidation.js';
 
 const router = express.Router();
 
-// Ruta para registrar un nuevo usuario
-router.post('/register', register);
+// Rutas públicas
+router.post('/register', validate(registerSchema), register);
+router.post('/login', validate(loginSchema), login);
 
-// Ruta para iniciar sesión
-router.post('/login', login);
+// Rutas protegidas
+router.get('/profile', authenticate, getProfile);
+router.post('/logout', authenticate, logout);
+router.get('/verify', authenticate, verifyToken);
 
-// Ruta protegida de ejemplo
-router.get('/profile', authenticate, (req, res) => {
-    res.status(200).json({ message: 'Perfil de usuario', user: req.user });
-});
-
-module.exports = router;
+export default router;

@@ -1,11 +1,13 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { AuthContext } from '../contexts/AuthContext';
-import { getProviders, createService } from '../services/api';
+import React, { useEffect, useState } from 'react';
+import { useAuth } from '../contexts/AuthContext';
+import { providerService } from '../services/api';
 import ProviderCard from '../components/ProviderCard';
+import toast from 'react-hot-toast';
 
 const ProviderPanel = () => {
-    const { user } = useContext(AuthContext);
+    const { isAuthenticated } = useAuth();
     const [providers, setProviders] = useState([]);
+    // const [loading, setLoading] = useState(true); // Para uso futuro
     const [serviceData, setServiceData] = useState({
         name: '',
         description: '',
@@ -15,8 +17,14 @@ const ProviderPanel = () => {
 
     useEffect(() => {
         const fetchProviders = async () => {
-            const response = await getProviders();
-            setProviders(response.data);
+            try {
+                const response = await providerService.getProviders();
+                if (response.success) {
+                    setProviders(response.data);
+                }
+            } catch (error) {
+                toast.error('Error al cargar proveedores');
+            }
         };
         fetchProviders();
     }, []);
@@ -28,9 +36,21 @@ const ProviderPanel = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        await createService(serviceData);
-        setServiceData({ name: '', description: '', price: '', category: '' });
-        // Optionally refresh the provider list or show a success message
+        try {
+            const response = await providerService.createProvider(serviceData);
+            if (response.success) {
+                toast.success('Servicio creado exitosamente');
+                setServiceData({ name: '', description: '', price: '', category: '' });
+                // Recargar la lista de proveedores
+                const updatedResponse = await providerService.getProviders();
+                if (updatedResponse.success) {
+                    setProviders(updatedResponse.data);
+                }
+            }
+        } catch (error) {
+            toast.error('Error al crear servicio');
+            console.error('Error creating service:', error);
+        }
     };
 
     return (

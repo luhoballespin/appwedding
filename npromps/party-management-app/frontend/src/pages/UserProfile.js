@@ -1,19 +1,23 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { AuthContext } from '../contexts/AuthContext';
-import { getUserProfile } from '../services/api';
+import React, { useEffect, useState } from 'react';
+import { useAuth } from '../contexts/AuthContext';
+import { userService } from '../services/api';
+import toast from 'react-hot-toast';
 
 const UserProfile = () => {
-    const { user } = useContext(AuthContext);
+    const { user } = useAuth();
     const [profileData, setProfileData] = useState(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchProfileData = async () => {
             try {
-                const data = await getUserProfile(user.id);
-                setProfileData(data);
+                const response = await userService.getUserProfile(user._id);
+                if (response.success) {
+                    setProfileData(response.data);
+                }
             } catch (error) {
                 console.error('Error fetching profile data:', error);
+                toast.error('Error al cargar el perfil');
             } finally {
                 setLoading(false);
             }

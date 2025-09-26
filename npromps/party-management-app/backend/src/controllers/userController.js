@@ -1,34 +1,139 @@
-const User = require('../models/User');
+import User from '../models/User.js';
+import { asyncHandler } from '../middleware/errorHandler.js';
+import { validate } from '../middleware/validation.js';
+import { updateUserSchema } from '../validations/userValidation.js';
 
-// Obtener información del perfil del usuario
-exports.getUserProfile = async (req, res) => {
-    try {
-        const user = await User.findById(req.user.id).select('-password');
-        if (!user) {
-            return res.status(404).json({ message: 'Usuario no encontrado' });
-        }
-        res.json(user);
-    } catch (error) {
-        res.status(500).json({ message: 'Error al obtener el perfil del usuario', error });
+// Obtener perfil de usuario
+export const getUserProfile = asyncHandler(async (req, res) => {
+    const user = await User.findById(req.params.id).select('-password');
+
+    if (!user) {
+        return res.status(404).json({
+            success: false,
+            message: 'Usuario no encontrado'
+        });
     }
-};
 
-// Actualizar datos del usuario
-exports.updateUserProfile = async (req, res) => {
-    const { name, email } = req.body;
+    res.status(200).json({
+        success: true,
+        data: user.getPublicProfile()
+    });
+});
 
-    try {
-        const user = await User.findByIdAndUpdate(
-            req.user.id,
-            { name, email },
-            { new: true, runValidators: true }
-        ).select('-password');
+// Actualizar perfil de usuario
+export const updateUserProfile = asyncHandler(async (req, res) => {
+    const user = await User.findById(req.params.id);
 
-        if (!user) {
-            return res.status(404).json({ message: 'Usuario no encontrado' });
-        }
-        res.json(user);
-    } catch (error) {
-        res.status(500).json({ message: 'Error al actualizar el perfil del usuario', error });
+    if (!user) {
+        return res.status(404).json({
+            success: false,
+            message: 'Usuario no encontrado'
+        });
     }
-};
+
+    // Verificar que el usuario sea el propietario del perfil o admin
+    if (user._id.toString() !== req.user._id.toString() && req.user.role !== 'admin') {
+        return res.status(403).json({
+            success: false,
+            message: 'No tienes permisos para editar este perfil'
+        });
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(
+        req.params.id,
+        req.body,
+        { new: true, runValidators: true }
+    ).select('-password');
+
+    res.status(200).json({
+        success: true,
+        data: updatedUser.getPublicProfile(),
+        message: 'Perfil actualizado exitosamente'
+    });
+});
+
+// Subir avatar
+export const uploadAvatar = asyncHandler(async (req, res) => {
+    const user = await User.findById(req.params.id);
+
+    if (!user) {
+        return res.status(404).json({
+            success: false,
+            message: 'Usuario no encontrado'
+        });
+    }
+
+    if (user._id.toString() !== req.user._id.toString()) {
+        return res.status(403).json({
+            success: false,
+            message: 'No tienes permisos para actualizar este avatar'
+        });
+    }
+
+    // Aquí se implementaría la lógica de subida de archivos
+    // Por ahora simulamos la actualización
+    const avatarUrl = req.body.avatarUrl || `https://api.dicebear.com/7.x/avataaars/svg?seed=${user.username}`;
+
+    user.avatar = avatarUrl;
+    await user.save();
+
+    res.status(200).json({
+        success: true,
+        data: user.getPublicProfile(),
+        message: 'Avatar actualizado exitosamente'
+    });
+});
+
+// Eliminar cuenta
+export const deleteAccount = asyncHandler(async (req, res) => {
+    const user = await User.findById(req.params.id);
+
+    if (!user) {
+        return res.status(404).json({
+            success: false,
+            message: 'Usuario no encontrado'
+        });
+    }
+
+    if (user._id.toString() !== req.user._id.toString() && req.user.role !== 'admin') {
+        return res.status(403).json({
+            success: false,
+            message: 'No tienes permisos para eliminar esta cuenta'
+        });
+    }
+
+    await User.findByIdAndDelete(req.params.id);
+
+    res.status(200).json({
+        success: true,
+        message: 'Cuenta eliminada exitosamente'
+    });
+});
+
+// Obtener estadísticas del usuario
+export const getUserStats = asyncHandler(async (req, res) => {
+    const userId = req.params.id;
+
+    // Verificar que el usuario sea el propietario o admin
+    if (userId !== req.user._id.toString() && req.user.role !== 'admin') {
+        return res.status(403).json({
+            success: false,
+            message: 'No tienes permisos para ver estas estadísticas'
+        });
+    }
+
+    // Aquí se implementarían las consultas para obtener estadísticas
+    // Por ahora devolvemos datos simulados
+    const stats = {
+        totalEvents: 0,
+        upcomingEvents: 0,
+        completedEvents: 0,
+        totalProviders: 0,
+        accountAge: Math.floor((Date.now() - new Date(req.user.createdAt).getTime()) / (1000 * 60 * 60 * 24))
+    };
+
+    res.status(200).json({
+        success: true,
+        data: stats
+    });
+});
