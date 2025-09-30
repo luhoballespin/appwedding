@@ -62,7 +62,11 @@ app.use(helmet());
 
 // CORS
 app.use(cors({
-    origin: config.FRONTEND_URL,
+    origin: [
+        config.FRONTEND_URL,
+        'https://appwedding.vercel.app',
+        /^https:\/\/appwedding-.*\.vercel\.app$/
+    ],
     credentials: true,
     optionsSuccessStatus: 200
 }));
