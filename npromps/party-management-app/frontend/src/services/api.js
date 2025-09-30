@@ -137,6 +137,64 @@ export const eventService = {
   addProvider: async (eventId, providerData) => {
     const response = await api.post(`/events/${eventId}/providers`, providerData);
     return response.data;
+  },
+
+  updateProviderStatus: async (eventId, providerId, status) => {
+    const response = await api.put(`/events/${eventId}/providers/${providerId}/status`, { status });
+    return response.data;
+  },
+
+  updateProviderPayment: async (eventId, providerId, paymentData) => {
+    const response = await api.put(`/events/${eventId}/providers/${providerId}/payment`, paymentData);
+    return response.data;
+  },
+
+  addProviderDocument: async (eventId, providerId, documentData) => {
+    const response = await api.post(`/events/${eventId}/providers/${providerId}/documents`, documentData);
+    return response.data;
+  },
+
+  removeProvider: async (eventId, providerId) => {
+    const response = await api.delete(`/events/${eventId}/providers/${providerId}`);
+    return response.data;
+  },
+
+  getAvailableProviders: async (eventId, params = {}) => {
+    const response = await api.get(`/events/${eventId}/providers/available`, { params });
+    return response.data;
+  }
+};
+
+// Servicios de pagos
+export const paymentService = {
+  createPayment: async (eventId, paymentData) => {
+    const response = await api.post(`/payments/events/${eventId}`, paymentData);
+    return response.data;
+  },
+
+  getUserPayments: async () => {
+    const response = await api.get('/payments');
+    return response.data;
+  },
+
+  getPaymentById: async (paymentId) => {
+    const response = await api.get(`/payments/${paymentId}`);
+    return response.data;
+  },
+
+  distributePayments: async (paymentId, providerId = null) => {
+    const response = await api.post(`/payments/${paymentId}/distribute`, { providerId });
+    return response.data;
+  },
+
+  processRefund: async (paymentId, refundData) => {
+    const response = await api.post(`/payments/${paymentId}/refund`, refundData);
+    return response.data;
+  },
+
+  getPaymentStats: async () => {
+    const response = await api.get('/payments/admin/stats');
+    return response.data;
   }
 };
 

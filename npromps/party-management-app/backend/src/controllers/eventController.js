@@ -271,19 +271,214 @@ export const addProvider = asyncHandler(async (req, res) => {
     const providerData = {
         provider: req.body.providerId,
         service: req.body.service,
+        description: req.body.description,
         price: req.body.price,
-        notes: req.body.notes
+        currency: req.body.currency || 'MXN',
+        priority: req.body.priority || 'medium',
+        startDate: req.body.startDate,
+        endDate: req.body.endDate,
+        contactPerson: req.body.contactPerson,
+        notes: req.body.notes,
+        isEssential: req.body.isEssential || false,
+        tags: req.body.tags || []
     };
 
-    event.providers.push(providerData);
-    await event.save();
+    await event.addProvider(providerData);
 
     const updatedEvent = await Event.findById(req.params.id)
-        .populate('providers.provider', 'businessName category pricing');
+        .populate('providers.provider', 'businessName category pricing contact location');
 
     res.status(200).json({
         success: true,
         data: updatedEvent,
         message: 'Proveedor agregado al evento'
+    });
+});
+
+// Actualizar estado de proveedor
+export const updateProviderStatus = asyncHandler(async (req, res) => {
+    const { eventId, providerId } = req.params;
+    const { status } = req.body;
+
+    const event = await Event.findById(eventId);
+
+    if (!event) {
+        return res.status(404).json({
+            success: false,
+            message: 'Evento no encontrado'
+        });
+    }
+
+    if (event.organizer.toString() !== req.user._id.toString()) {
+        return res.status(403).json({
+            success: false,
+            message: 'No tienes permisos para editar este evento'
+        });
+    }
+
+    await event.updateProviderStatus(providerId, status);
+
+    const updatedEvent = await Event.findById(eventId)
+        .populate('providers.provider', 'businessName category pricing contact location');
+
+    res.status(200).json({
+        success: true,
+        data: updatedEvent,
+        message: 'Estado del proveedor actualizado'
+    });
+});
+
+// Actualizar pago de proveedor
+export const updateProviderPayment = asyncHandler(async (req, res) => {
+    const { eventId, providerId } = req.params;
+    const { status, paid, total } = req.body;
+
+    const event = await Event.findById(eventId);
+
+    if (!event) {
+        return res.status(404).json({
+            success: false,
+            message: 'Evento no encontrado'
+        });
+    }
+
+    if (event.organizer.toString() !== req.user._id.toString()) {
+        return res.status(403).json({
+            success: false,
+            message: 'No tienes permisos para editar este evento'
+        });
+    }
+
+    const paymentData = { status, paid, total };
+    await event.updateProviderPayment(providerId, paymentData);
+
+    const updatedEvent = await Event.findById(eventId)
+        .populate('providers.provider', 'businessName category pricing contact location');
+
+    res.status(200).json({
+        success: true,
+        data: updatedEvent,
+        message: 'Información de pago actualizada'
+    });
+});
+
+// Agregar documento a proveedor
+export const addProviderDocument = asyncHandler(async (req, res) => {
+    const { eventId, providerId } = req.params;
+    const { name, url, type } = req.body;
+
+    const event = await Event.findById(eventId);
+
+    if (!event) {
+        return res.status(404).json({
+            success: false,
+            message: 'Evento no encontrado'
+        });
+    }
+
+    if (event.organizer.toString() !== req.user._id.toString()) {
+        return res.status(403).json({
+            success: false,
+            message: 'No tienes permisos para editar este evento'
+        });
+    }
+
+    const documentData = { name, url, type };
+    await event.addProviderDocument(providerId, documentData);
+
+    const updatedEvent = await Event.findById(eventId)
+        .populate('providers.provider', 'businessName category pricing contact location');
+
+    res.status(200).json({
+        success: true,
+        data: updatedEvent,
+        message: 'Documento agregado al proveedor'
+    });
+});
+
+// Remover proveedor del evento
+export const removeProvider = asyncHandler(async (req, res) => {
+    const { eventId, providerId } = req.params;
+
+    const event = await Event.findById(eventId);
+
+    if (!event) {
+        return res.status(404).json({
+            success: false,
+            message: 'Evento no encontrado'
+        });
+    }
+
+    if (event.organizer.toString() !== req.user._id.toString()) {
+        return res.status(403).json({
+            success: false,
+            message: 'No tienes permisos para editar este evento'
+        });
+    }
+
+    await event.removeProvider(providerId);
+
+    const updatedEvent = await Event.findById(eventId)
+        .populate('providers.provider', 'businessName category pricing contact location');
+
+    res.status(200).json({
+        success: true,
+        data: updatedEvent,
+        message: 'Proveedor removido del evento'
+    });
+});
+
+// Obtener proveedores disponibles para un evento
+export const getAvailableProviders = asyncHandler(async (req, res) => {
+    const { eventId } = req.params;
+    const { category, date, city } = req.query;
+
+    const event = await Event.findById(eventId);
+
+    if (!event) {
+        return res.status(404).json({
+            success: false,
+            message: 'Evento no encontrado'
+        });
+    }
+
+    if (event.organizer.toString() !== req.user._id.toString()) {
+        return res.status(403).json({
+            success: false,
+            message: 'No tienes permisos para ver este evento'
+        });
+    }
+
+    // Construir filtros de búsqueda
+    const filters = {
+        isActive: true,
+        isVerified: true
+    };
+
+    if (category) {
+        filters.category = category;
+    }
+
+    if (city) {
+        filters['location.city'] = new RegExp(city, 'i');
+    }
+
+    const Provider = (await import('../models/Provider.js')).default;
+    let providers = await Provider.find(filters)
+        .select('businessName description category pricing location contact images averageRating totalReviews')
+        .sort({ averageRating: -1, totalReviews: -1 });
+
+    // Filtrar por disponibilidad en la fecha del evento
+    if (date) {
+        const eventDate = new Date(date);
+        providers = providers.filter(provider =>
+            provider.isAvailableOnDate(eventDate)
+        );
+    }
+
+    res.status(200).json({
+        success: true,
+        data: providers,
+        count: providers.length
     });
 });

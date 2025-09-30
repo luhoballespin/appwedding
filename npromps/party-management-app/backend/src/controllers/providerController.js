@@ -24,7 +24,7 @@ export const createProvider = asyncHandler(async (req, res) => {
 export const getProviders = asyncHandler(async (req, res) => {
     const {
         page = 1,
-        limit = 10,
+        limit = 50, // Aumentar límite por defecto para mostrar más proveedores
         category,
         location,
         minPrice,
@@ -34,8 +34,10 @@ export const getProviders = asyncHandler(async (req, res) => {
         sortOrder = 'desc'
     } = req.query;
 
+    console.log('🔍 Búsqueda de proveedores con filtros:', req.query);
+
     // Construir filtros
-    const filters = {};
+    const filters = { isActive: true }; // Solo proveedores activos
 
     if (category) {
         filters.category = category;
@@ -69,6 +71,9 @@ export const getProviders = asyncHandler(async (req, res) => {
     // Ejecutar consulta con paginación
     const skip = (Number(page) - 1) * Number(limit);
 
+    console.log('📋 Filtros aplicados:', filters);
+    console.log('📊 Opciones de ordenamiento:', sortOptions);
+
     const providers = await Provider.find(filters)
         .populate('owner', 'username firstName lastName email')
         .sort(sortOptions)
@@ -76,6 +81,8 @@ export const getProviders = asyncHandler(async (req, res) => {
         .limit(Number(limit));
 
     const total = await Provider.countDocuments(filters);
+
+    console.log(`✅ Encontrados ${providers.length} proveedores de ${total} total`);
 
     res.status(200).json({
         success: true,

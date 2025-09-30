@@ -1,80 +1,258 @@
-# Party Management App
+# 💒 Wedding Planner - Aplicación de Planificación de Bodas
 
-Este proyecto es una aplicación web para la gestión y organización de fiestas. Permite a los usuarios, ya sean organizadores de eventos o proveedores de servicios, interactuar de manera efectiva para planificar eventos memorables.
+Una aplicación completa para la gestión profesional de bodas y eventos, desarrollada con las mejores tecnologías modernas.
 
-## Estructura del Proyecto
+## 🚀 Características Principales
 
-El proyecto está dividido en dos partes principales: **backend** y **frontend**.
+### 👥 **Gestión de Usuarios**
+- Registro e inicio de sesión seguro
+- Perfiles de usuario personalizables
+- Roles de usuario (cliente/proveedor/admin)
 
-### Backend
+### 🎉 **Gestión de Eventos**
+- Creación y edición de eventos
+- Calendario interactivo
+- Lista de invitados con confirmaciones
+- Checklist de tareas
+- Presupuesto y gastos
 
-El backend está construido con **Node.js** y **Express**, y utiliza **MongoDB** como base de datos. La estructura del backend incluye:
+### 🏢 **Directorio de Proveedores**
+- Catálogo completo de proveedores
+- Búsqueda y filtros avanzados
+- Sistema de calificaciones y reseñas
+- Gestión de solicitudes
 
-- **src**: Contiene la lógica de la aplicación.
-  - **controllers**: Controladores para manejar la lógica de negocio.
-  - **middleware**: Middleware para autenticación y autorización.
-  - **models**: Modelos de datos utilizando Mongoose.
-  - **routes**: Definición de rutas para la API.
-  - **utils**: Utilidades, como la conexión a la base de datos.
-- **package.json**: Configuración de dependencias y scripts del backend.
+### 💰 **Sistema de Pagos**
+- Seguimiento de pagos
+- Distribución automática
+- Reportes financieros
+- Integración con PayPal
 
-### Frontend
+### 📱 **Interfaz Moderna**
+- Diseño responsive
+- Experiencia de usuario optimizada
+- Componentes reutilizables
+- Animaciones fluidas
 
-El frontend está construido con **React** y proporciona una interfaz de usuario interactiva. La estructura del frontend incluye:
+## 🛠️ Tecnologías Utilizadas
 
-- **public**: Archivos estáticos, incluyendo el HTML principal.
-- **src**: Contiene los componentes y la lógica de la aplicación.
-  - **components**: Componentes reutilizables de la interfaz.
-  - **contexts**: Contextos para manejar el estado global, como la autenticación.
-  - **hooks**: Hooks personalizados para lógica de componentes.
-  - **pages**: Páginas principales de la aplicación.
-  - **services**: Servicios para interactuar con la API del backend.
-  - **styles**: Estilos globales para la aplicación.
-- **package.json**: Configuración de dependencias y scripts del frontend.
+### **Backend**
+- **Node.js** - Runtime de JavaScript
+- **Express.js** - Framework web
+- **MongoDB** - Base de datos NoSQL
+- **Mongoose** - ODM para MongoDB
+- **JWT** - Autenticación
+- **Winston** - Logging
+- **Swagger** - Documentación API
 
-## Funcionalidades
+### **Frontend**
+- **React 18** - Biblioteca de UI
+- **Tailwind CSS** - Framework CSS
+- **React Router** - Enrutamiento
+- **Axios** - Cliente HTTP
+- **Framer Motion** - Animaciones
+- **React Hook Form** - Formularios
+- **React Big Calendar** - Calendario
 
-### Para Organizadores
+## 📁 Estructura del Proyecto
 
-- Dashboard con calendario, notas personalizadas y listas de invitados.
-- Búsqueda y selección de proveedores.
+```
+wedding-planner/
+├── backend/                 # API Node.js
+│   ├── src/
+│   │   ├── controllers/     # Controladores
+│   │   ├── models/         # Modelos de datos
+│   │   ├── routes/         # Rutas de API
+│   │   ├── middleware/     # Middleware personalizado
+│   │   ├── validations/    # Validaciones
+│   │   └── utils/          # Utilidades
+│   ├── scripts/           # Scripts de utilidad
+│   ├── uploads/           # Archivos subidos
+│   └── logs/              # Logs del sistema
+├── frontend/              # Aplicación React
+│   ├── src/
+│   │   ├── components/     # Componentes reutilizables
+│   │   ├── pages/         # Páginas de la aplicación
+│   │   ├── contexts/      # Contextos de React
+│   │   ├── services/      # Servicios de API
+│   │   └── styles/        # Estilos globales
+│   └── public/            # Archivos públicos
+└── docker-compose.yml    # Configuración Docker
+```
 
-### Para Proveedores
+## 🚀 Instalación y Configuración
 
-- Panel para crear y editar servicios.
-- Visualización de solicitudes de contratación.
+### **Prerrequisitos**
+- Node.js 18+
+- MongoDB 6.0+
+- Git
 
-## Requisitos Técnicos
+### **Instalación Local**
 
-- **Backend**: Node.js, Express, MongoDB, Mongoose, JWT para autenticación.
-- **Frontend**: React, hooks, Context API o Redux según sea necesario.
+1. **Clonar el repositorio**
+```bash
+git clone https://github.com/tu-usuario/wedding-planner.git
+cd wedding-planner
+```
 
-## Instalación
+2. **Configurar Backend**
+```bash
+cd backend
+npm install
+cp env-template.txt .env
+# Editar .env con tus configuraciones
+npm run dev
+```
 
-Para instalar y ejecutar el proyecto, sigue estos pasos:
+3. **Configurar Frontend**
+```bash
+cd frontend
+npm install
+# Crear .env con REACT_APP_API_URL=http://localhost:5000/api
+npm start
+```
 
-1. Clona el repositorio:
-   ```
-   git clone <URL_DEL_REPOSITORIO>
-   ```
+### **Instalación con Docker**
 
-2. Navega al directorio del backend y frontend y ejecuta:
-   ```
-   cd backend
-   npm install
-   npm start
-   ```
+```bash
+# Clonar y configurar
+git clone https://github.com/tu-usuario/wedding-planner.git
+cd wedding-planner
 
-   ```
-   cd frontend
-   npm install
-   npm start
-   ```
+# Ejecutar con Docker Compose
+docker-compose up -d
+```
 
-## Contribuciones
+## 🌐 Despliegue en Producción
 
-Las contribuciones son bienvenidas. Si deseas contribuir, por favor abre un issue o un pull request.
+### **Plataformas Recomendadas**
 
-## Licencia
+#### **Backend: Render.com**
+- ✅ Deploy automático desde GitHub
+- ✅ Variables de entorno fáciles
+- ✅ SSL automático
+- ✅ Plan gratuito disponible
 
-Este proyecto está bajo la Licencia MIT.
+#### **Frontend: Vercel**
+- ✅ Optimización automática
+- ✅ CDN global
+- ✅ Deploy automático
+- ✅ Analytics incluido
+
+#### **Base de Datos: MongoDB Atlas**
+- ✅ Base de datos en la nube
+- ✅ Backup automático
+- ✅ Escalabilidad
+- ✅ Plan gratuito disponible
+
+### **Configuración de Despliegue**
+
+1. **Configurar MongoDB Atlas**
+   - Crear cluster gratuito
+   - Configurar usuario y contraseña
+   - Obtener connection string
+
+2. **Desplegar Backend en Render**
+   - Conectar repositorio GitHub
+   - Configurar variables de entorno
+   - Deploy automático
+
+3. **Desplegar Frontend en Vercel**
+   - Conectar repositorio GitHub
+   - Configurar variables de entorno
+   - Deploy automático
+
+## 📚 Documentación de API
+
+La documentación completa de la API está disponible en:
+- **Desarrollo**: `http://localhost:5000/api-docs`
+- **Producción**: `https://tu-backend.onrender.com/api-docs`
+
+### **Endpoints Principales**
+
+#### **Autenticación**
+- `POST /api/auth/register` - Registro de usuario
+- `POST /api/auth/login` - Inicio de sesión
+- `GET /api/auth/profile` - Perfil de usuario
+
+#### **Eventos**
+- `GET /api/events` - Listar eventos
+- `POST /api/events` - Crear evento
+- `PUT /api/events/:id` - Actualizar evento
+- `DELETE /api/events/:id` - Eliminar evento
+
+#### **Proveedores**
+- `GET /api/providers` - Listar proveedores
+- `POST /api/providers` - Crear proveedor
+- `GET /api/providers/search` - Buscar proveedores
+
+#### **Pagos**
+- `POST /api/payments` - Crear pago
+- `GET /api/payments` - Listar pagos
+- `POST /api/payments/:id/distribute` - Distribuir pago
+
+## 🔧 Configuración de Variables de Entorno
+
+### **Backend (.env)**
+```env
+NODE_ENV=development
+PORT=5000
+MONGO_URI=mongodb://localhost:27017/wedding-planner
+JWT_SECRET=tu-jwt-secret
+JWT_EXPIRE=7d
+FRONTEND_URL=http://localhost:3000
+```
+
+### **Frontend (.env)**
+```env
+REACT_APP_API_URL=http://localhost:5000/api
+```
+
+## 🧪 Testing
+
+```bash
+# Backend
+cd backend
+npm test
+
+# Frontend
+cd frontend
+npm test
+```
+
+## 📊 Monitoreo y Logs
+
+- **Logs del Backend**: `backend/logs/`
+- **Métricas de Render**: Dashboard de Render
+- **Analytics de Vercel**: Dashboard de Vercel
+- **MongoDB Atlas**: Dashboard de Atlas
+
+## 🤝 Contribución
+
+1. Fork el proyecto
+2. Crear rama para feature (`git checkout -b feature/AmazingFeature`)
+3. Commit cambios (`git commit -m 'Add some AmazingFeature'`)
+4. Push a la rama (`git push origin feature/AmazingFeature`)
+5. Abrir Pull Request
+
+## 📄 Licencia
+
+Este proyecto está bajo la Licencia MIT. Ver `LICENSE` para más detalles.
+
+## 👥 Equipo
+
+- **Desarrollo**: Wedding Planner Team
+- **Diseño**: UI/UX Team
+- **Backend**: Node.js Team
+- **Frontend**: React Team
+
+## 📞 Soporte
+
+Para soporte técnico o preguntas:
+- 📧 Email: support@weddingplanner.com
+- 🐛 Issues: GitHub Issues
+- 📖 Documentación: `/api-docs`
+
+---
+
+**¡Planifica la boda perfecta con Wedding Planner! 💒✨**

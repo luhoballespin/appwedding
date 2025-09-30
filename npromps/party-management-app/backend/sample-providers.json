@@ -1,0 +1,696 @@
+[
+  {
+    "businessName": "Catering Elegante",
+    "description": "Somos especialistas en catering para bodas y eventos especiales con más de 10 años de experiencia. Nuestro equipo de chefs profesionales crea menús personalizados usando ingredientes frescos y de la más alta calidad. Ofrecemos desde aperitivos sofisticados hasta platos principales gourmet, con opciones vegetarianas y veganas. Nuestro servicio incluye personal de meseros profesionales, vajilla elegante y presentación impecable que hará de tu evento una experiencia memorable.",
+    "category": "catering",
+    "services": [
+      {
+        "name": "Menú Completo Bodas",
+        "description": "Servicio completo de catering para bodas incluyendo aperitivos gourmet, plato principal (carne/pescado), guarniciones, postres artesanales, barra libre con bartender profesional, vajilla elegante y personal de meseros. Incluye degustación previa y menú personalizado.",
+        "basePrice": 85,
+        "currency": "USD",
+        "pricingType": "per_person",
+        "isActive": true
+      },
+      {
+        "name": "Catering Corporativo",
+        "description": "Servicio de catering para eventos corporativos, reuniones de negocios y conferencias. Incluye coffee break, almuerzos ejecutivos, cenas de gala, opciones vegetarianas y equipos de sonido para presentaciones.",
+        "basePrice": 45,
+        "currency": "USD",
+        "pricingType": "per_person",
+        "isActive": true
+      },
+      {
+        "name": "Servicio de Barra Libre",
+        "description": "Barra libre completa con bartender profesional, cócteles personalizados, vinos seleccionados, cervezas artesanales, bebidas no alcohólicas y servicio de sommelier. Incluye decoración de barra y cristalería premium.",
+        "basePrice": 35,
+        "currency": "USD",
+        "pricingType": "per_person",
+        "isActive": true
+      },
+      {
+        "name": "Servicio de Bartender",
+        "description": "Bartender profesional para eventos con equipo completo de barra, cócteles personalizados y servicio de sommelier.",
+        "basePrice": 50,
+        "currency": "USD",
+        "pricingType": "hourly",
+        "hourlyRate": 50,
+        "minimumHours": 4,
+        "maximumHours": 12,
+        "isActive": true
+      }
+    ],
+    "pricing": {
+      "basePrice": 85,
+      "currency": "USD",
+      "pricePerPerson": 85,
+      "minimumOrder": 50,
+      "discounts": [
+        {
+          "type": "percentage",
+          "value": 10,
+          "minimumQuantity": 100,
+          "validUntil": "2024-12-31T23:59:59.000Z"
+        }
+      ]
+    },
+    "location": {
+      "address": "Av. Reforma 123, Col. Centro",
+      "city": "Ciudad de México",
+      "state": "CDMX",
+      "zipCode": "06000",
+      "coordinates": {
+        "latitude": 19.4326,
+        "longitude": -99.1332
+      }
+    },
+    "contact": {
+      "phone": "+52 55 1234 5678",
+      "email": "info@cateringelegante.com",
+      "website": "https://cateringelegante.com",
+      "socialMedia": {
+        "facebook": "https://facebook.com/cateringelegante",
+        "instagram": "https://instagram.com/cateringelegante"
+      }
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1556909114-f6e7ad7b0a4a?w=800",
+        "alt": "Platos elegantes de catering",
+        "isMain": true
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1556909114-f6e7ad7b0a4a?w=800",
+        "alt": "Servicio de catering en evento",
+        "isMain": false
+      }
+    ],
+    "isActive": true,
+    "isVerified": true,
+    "reviews": [
+      {
+        "user": "507f1f77bcf86cd799439011",
+        "rating": 5,
+        "comment": "Excelente servicio, muy profesional y la comida deliciosa",
+        "createdAt": "2024-01-15T10:30:00.000Z"
+      },
+      {
+        "user": "507f1f77bcf86cd799439012",
+        "rating": 5,
+        "comment": "Superaron nuestras expectativas, altamente recomendado",
+        "createdAt": "2024-01-20T14:45:00.000Z"
+      }
+    ],
+    "averageRating": 5.0,
+    "totalReviews": 2,
+    "tags": ["premium", "bodas", "corporativo", "barra-libre"],
+    "availability": {
+      "monday": { "start": "09:00", "end": "18:00", "isAvailable": true },
+      "tuesday": { "start": "09:00", "end": "18:00", "isAvailable": true },
+      "wednesday": { "start": "09:00", "end": "18:00", "isAvailable": true },
+      "thursday": { "start": "09:00", "end": "18:00", "isAvailable": true },
+      "friday": { "start": "09:00", "end": "20:00", "isAvailable": true },
+      "saturday": { "start": "08:00", "end": "22:00", "isAvailable": true },
+      "sunday": { "start": "08:00", "end": "20:00", "isAvailable": true }
+    },
+    "stats": {
+      "totalEvents": 0,
+      "completedEvents": 0,
+      "cancelledEvents": 0,
+      "totalRevenue": 0,
+      "averageRating": 5.0,
+      "responseTime": 2
+    },
+    "notifications": {
+      "newEventRequest": true,
+      "eventUpdates": true,
+      "paymentReminders": true,
+      "reviewRequests": true
+    }
+  },
+  {
+    "businessName": "Decoraciones Florales María",
+    "description": "Con más de 15 años de experiencia, somos especialistas en decoración floral para bodas y eventos especiales. María, nuestra florista principal, ha trabajado en eventos de alto perfil y crea arreglos únicos y memorables. Trabajamos con flores frescas importadas y locales, creando desde ramos de novia clásicos hasta decoraciones modernas y minimalistas. Nuestro servicio incluye consultoría gratuita, diseño personalizado y entrega e instalación en el lugar del evento.",
+    "category": "flores",
+    "services": [
+      {
+        "name": "Decoración Completa Bodas",
+        "description": "Decoración floral completa para bodas incluyendo centro de mesa elegantes (12-15 unidades), arco floral para ceremonia, ramo de novia y bouquet de lanzamiento, decoración del altar, pasillo floral, decoración de mesas de regalos y cake, guirnaldas florales y instalación completa. Incluye consultoría de diseño y flores de temporada premium.",
+        "price": 1200,
+        "isActive": true
+      },
+      {
+        "name": "Centros de Mesa",
+        "description": "Centros de mesa personalizados para cualquier tipo de evento. Diseños modernos, clásicos o rústicos. Incluye flores frescas, follaje, velas y bases decorativas. Opciones de diferentes alturas y estilos según el tema del evento.",
+        "price": 45,
+        "isActive": true
+      },
+      {
+        "name": "Ramo de Novia",
+        "description": "Ramos de novia personalizados con flores frescas de temporada. Incluye consultoría de diseño, prueba de ramo, cinta personalizada y preservación del ramo. Estilos: cascada, redondo, natural, bohemio o clásico.",
+        "price": 150,
+        "isActive": true
+      }
+    ],
+    "pricing": {
+      "basePrice": 1200,
+      "currency": "USD",
+      "pricePerPerson": 0,
+      "minimumOrder": 200,
+      "discounts": [
+        {
+          "type": "percentage",
+          "value": 15,
+          "minimumQuantity": 1,
+          "validUntil": "2024-06-30T23:59:59.000Z"
+        }
+      ]
+    },
+    "location": {
+      "address": "Calle Rosas 456, Col. Del Valle",
+      "city": "Ciudad de México",
+      "state": "CDMX",
+      "zipCode": "03100",
+      "coordinates": {
+        "latitude": 19.3842,
+        "longitude": -99.1700
+      }
+    },
+    "contact": {
+      "phone": "+52 55 9876 5432",
+      "email": "maria@decoracionesflorales.com",
+      "website": "https://decoracionesflorales.com",
+      "socialMedia": {
+        "instagram": "https://instagram.com/decoracionesflorales",
+        "facebook": "https://facebook.com/decoracionesflorales"
+      }
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=800",
+        "alt": "Arreglo floral elegante",
+        "isMain": true
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=800",
+        "alt": "Centro de mesa floral",
+        "isMain": false
+      }
+    ],
+    "isActive": true,
+    "isVerified": true,
+    "reviews": [
+      {
+        "user": "507f1f77bcf86cd799439013",
+        "rating": 5,
+        "comment": "Las flores más hermosas que hemos visto, María es una artista",
+        "createdAt": "2024-02-10T16:20:00.000Z"
+      }
+    ],
+    "averageRating": 5.0,
+    "totalReviews": 1,
+    "tags": ["flores", "decoración", "bodas", "centros-mesa"],
+    "availability": {
+      "monday": { "start": "08:00", "end": "17:00", "isAvailable": true },
+      "tuesday": { "start": "08:00", "end": "17:00", "isAvailable": true },
+      "wednesday": { "start": "08:00", "end": "17:00", "isAvailable": true },
+      "thursday": { "start": "08:00", "end": "17:00", "isAvailable": true },
+      "friday": { "start": "08:00", "end": "18:00", "isAvailable": true },
+      "saturday": { "start": "07:00", "end": "19:00", "isAvailable": true },
+      "sunday": { "start": "07:00", "end": "17:00", "isAvailable": true }
+    },
+    "stats": {
+      "totalEvents": 0,
+      "completedEvents": 0,
+      "cancelledEvents": 0,
+      "totalRevenue": 0,
+      "averageRating": 5.0,
+      "responseTime": 1
+    },
+    "notifications": {
+      "newEventRequest": true,
+      "eventUpdates": true,
+      "paymentReminders": true,
+      "reviewRequests": true
+    }
+  },
+  {
+    "businessName": "DJ Pro Music",
+    "description": "Somos DJs profesionales con más de 8 años de experiencia en bodas, fiestas y eventos corporativos. Contamos con equipos de sonido de alta calidad (marcas Pioneer, JBL, Shure), iluminación LED profesional y una biblioteca musical extensa de más de 50,000 canciones. Nuestro servicio incluye consultoría musical previa, playlist personalizada, micrófonos inalámbricos, efectos de iluminación sincronizados y asistencia técnica durante todo el evento. Especialistas en música latina, internacional, clásica y moderna.",
+    "category": "musica",
+    "services": [
+      {
+        "name": "Servicio DJ Completo",
+        "description": "Servicio completo de DJ con equipo de sonido profesional (2 torres de sonido, subwoofers, mezcladora Pioneer), iluminación LED dinámica, micrófonos inalámbricos, playlist personalizada, consultoría musical previa y DJ profesional durante 6 horas. Incluye setup y desmontaje, música de fondo durante la comida y animación de la pista de baile.",
+        "basePrice": 800,
+        "currency": "USD",
+        "pricingType": "fixed",
+        "isActive": true
+      },
+      {
+        "name": "Solo Equipo de Sonido",
+        "description": "Renta de equipo de sonido profesional para eventos. Incluye 2 torres de sonido JBL, subwoofers, mezcladora, micrófonos inalámbricos, cables y conexiones. Perfecto para ceremonias, conferencias o eventos que requieren solo audio. Incluye técnico de sonido por 4 horas.",
+        "basePrice": 300,
+        "currency": "USD",
+        "pricingType": "fixed",
+        "isActive": true
+      },
+      {
+        "name": "Iluminación Especial",
+        "description": "Servicio de iluminación especial para pista de baile. Incluye luces LED dinámicas, focos móviles, efectos de humo, luces estroboscópicas, iluminación de ambiente y sincronización con la música. Perfecto para crear una atmósfera espectacular en tu evento.",
+        "basePrice": 200,
+        "currency": "USD",
+        "pricingType": "fixed",
+        "isActive": true
+      },
+      {
+        "name": "DJ por Hora",
+        "description": "Servicio de DJ profesional por horas con equipo de sonido básico. Incluye DJ profesional, equipo de sonido portátil, micrófono inalámbrico y música personalizada.",
+        "basePrice": 100,
+        "currency": "USD",
+        "pricingType": "hourly",
+        "hourlyRate": 100,
+        "minimumHours": 2,
+        "maximumHours": 8,
+        "isActive": true
+      }
+    ],
+    "pricing": {
+      "basePrice": 800,
+      "currency": "USD",
+      "pricePerPerson": 0,
+      "minimumOrder": 0,
+      "discounts": [
+        {
+          "type": "fixed",
+          "value": 100,
+          "minimumQuantity": 1,
+          "validUntil": "2024-12-31T23:59:59.000Z"
+        }
+      ]
+    },
+    "location": {
+      "address": "Av. Insurgentes 789, Col. Roma Norte",
+      "city": "Ciudad de México",
+      "state": "CDMX",
+      "zipCode": "06700",
+      "coordinates": {
+        "latitude": 19.4194,
+        "longitude": -99.1550
+      }
+    },
+    "contact": {
+      "phone": "+52 55 5555 1234",
+      "email": "info@djpromusic.com",
+      "website": "https://djpromusic.com",
+      "socialMedia": {
+        "instagram": "https://instagram.com/djpromusic",
+        "facebook": "https://facebook.com/djpromusic"
+      }
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1571266028243-e68f96da4a73?w=800",
+        "alt": "DJ profesional en acción",
+        "isMain": true
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1571266028243-e68f96da4a73?w=800",
+        "alt": "Equipo de sonido profesional",
+        "isMain": false
+      }
+    ],
+    "isActive": true,
+    "isVerified": true,
+    "reviews": [
+      {
+        "user": "507f1f77bcf86cd799439014",
+        "rating": 5,
+        "comment": "Excelente DJ, mantuvo a todos bailando toda la noche",
+        "createdAt": "2024-01-25T20:30:00.000Z"
+      },
+      {
+        "user": "507f1f77bcf86cd799439015",
+        "rating": 4,
+        "comment": "Muy profesional y puntual, recomendado",
+        "createdAt": "2024-02-05T18:15:00.000Z"
+      }
+    ],
+    "averageRating": 4.5,
+    "totalReviews": 2,
+    "tags": ["dj", "música", "sonido", "iluminación"],
+    "availability": {
+      "monday": { "start": "10:00", "end": "18:00", "isAvailable": true },
+      "tuesday": { "start": "10:00", "end": "18:00", "isAvailable": true },
+      "wednesday": { "start": "10:00", "end": "18:00", "isAvailable": true },
+      "thursday": { "start": "10:00", "end": "18:00", "isAvailable": true },
+      "friday": { "start": "10:00", "end": "22:00", "isAvailable": true },
+      "saturday": { "start": "09:00", "end": "23:00", "isAvailable": true },
+      "sunday": { "start": "09:00", "end": "22:00", "isAvailable": true }
+    },
+    "stats": {
+      "totalEvents": 0,
+      "completedEvents": 0,
+      "cancelledEvents": 0,
+      "totalRevenue": 0,
+      "averageRating": 4.5,
+      "responseTime": 3
+    },
+    "notifications": {
+      "newEventRequest": true,
+      "eventUpdates": true,
+      "paymentReminders": true,
+      "reviewRequests": true
+    }
+  },
+  {
+    "businessName": "Fotografía Artística Luna",
+    "description": "Luna es una fotógrafa profesional con más de 12 años de experiencia especializada en bodas y eventos especiales. Su estilo artístico y único ha sido reconocido en revistas de bodas internacionales. Utilizamos equipos profesionales Canon y Sony, iluminación natural y artificial, y técnicas de fotografía artística. Nuestro servicio incluye sesión de pareja previa, cobertura completa del evento, edición profesional, álbum digital de alta resolución y entrega en 15 días hábiles. Especialistas en fotografía de bodas, quinceañeras y eventos corporativos.",
+    "category": "fotografia",
+    "services": [
+      {
+        "name": "Sesión Completa Bodas",
+        "description": "Cobertura completa de boda (8-10 horas) incluyendo preparación de novia, ceremonia, recepción, sesión de pareja, fotos familiares y detalles del evento. Incluye 2 fotógrafos, edición profesional de 500+ fotos, álbum digital de alta resolución, slideshow con música y entrega en 15 días. Incluye sesión de pareja previa gratuita.",
+        "price": 1500,
+        "isActive": true
+      },
+      {
+        "name": "Sesión de Pareja",
+        "description": "Sesión fotográfica romántica para parejas (2-3 horas) en ubicación de tu elección. Incluye edición profesional de 50+ fotos, álbum digital y entrega en 7 días. Perfecta para aniversarios, propuestas o sesiones pre-boda. Incluye consultoría de vestuario y poses.",
+        "price": 300,
+        "isActive": true
+      },
+      {
+        "name": "Fotografía de Eventos",
+        "description": "Cobertura fotográfica para eventos corporativos y sociales (4-6 horas). Incluye fotógrafo profesional, edición de 200+ fotos, álbum digital y entrega en 10 días. Perfecto para conferencias, galas, fiestas de cumpleaños y eventos empresariales.",
+        "price": 500,
+        "isActive": true
+      }
+    ],
+    "pricing": {
+      "basePrice": 1500,
+      "currency": "USD",
+      "pricePerPerson": 0,
+      "minimumOrder": 0,
+      "discounts": [
+        {
+          "type": "percentage",
+          "value": 20,
+          "minimumQuantity": 1,
+          "validUntil": "2024-05-31T23:59:59.000Z"
+        }
+      ]
+    },
+    "location": {
+      "address": "Calle Luna 321, Col. Condesa",
+      "city": "Ciudad de México",
+      "state": "CDMX",
+      "zipCode": "06140",
+      "coordinates": {
+        "latitude": 19.4100,
+        "longitude": -99.1700
+      }
+    },
+    "contact": {
+      "phone": "+52 55 7777 8888",
+      "email": "luna@fotografiaartistica.com",
+      "website": "https://fotografiaartistica.com",
+      "socialMedia": {
+        "instagram": "https://instagram.com/fotografiaartistica",
+        "facebook": "https://facebook.com/fotografiaartistica"
+      }
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1606800052052-a08af7148866?w=800",
+        "alt": "Fotografía artística de boda",
+        "isMain": true
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1606800052052-a08af7148866?w=800",
+        "alt": "Sesión de pareja romántica",
+        "isMain": false
+      }
+    ],
+    "isActive": true,
+    "isVerified": true,
+    "reviews": [
+      {
+        "user": "507f1f77bcf86cd799439016",
+        "rating": 5,
+        "comment": "Luna capturó perfectamente la magia de nuestro día especial",
+        "createdAt": "2024-01-30T12:00:00.000Z"
+      },
+      {
+        "user": "507f1f77bcf86cd799439017",
+        "rating": 5,
+        "comment": "Fotografías increíbles, muy profesional y creativa",
+        "createdAt": "2024-02-15T15:30:00.000Z"
+      }
+    ],
+    "averageRating": 5.0,
+    "totalReviews": 2,
+    "tags": ["fotografía", "bodas", "artística", "sesiones"],
+    "availability": {
+      "monday": { "start": "09:00", "end": "17:00", "isAvailable": true },
+      "tuesday": { "start": "09:00", "end": "17:00", "isAvailable": true },
+      "wednesday": { "start": "09:00", "end": "17:00", "isAvailable": true },
+      "thursday": { "start": "09:00", "end": "17:00", "isAvailable": true },
+      "friday": { "start": "09:00", "end": "19:00", "isAvailable": true },
+      "saturday": { "start": "08:00", "end": "20:00", "isAvailable": true },
+      "sunday": { "start": "08:00", "end": "18:00", "isAvailable": true }
+    },
+    "stats": {
+      "totalEvents": 0,
+      "completedEvents": 0,
+      "cancelledEvents": 0,
+      "totalRevenue": 0,
+      "averageRating": 5.0,
+      "responseTime": 1
+    },
+    "notifications": {
+      "newEventRequest": true,
+      "eventUpdates": true,
+      "paymentReminders": true,
+      "reviewRequests": true
+    }
+  },
+  {
+    "businessName": "Transporte Elegante VIP",
+    "description": "Somos especialistas en transporte de lujo para bodas y eventos especiales con más de 20 años de experiencia. Nuestra flota incluye limusinas, vehículos de lujo, autobuses ejecutivos y carruajes clásicos. Todos nuestros choferes son profesionales uniformados con experiencia en eventos de alto perfil. Ofrecemos servicio puerta a puerta, decoración floral en vehículos, bebidas de cortesía y coordinación completa con el timeline del evento. Disponibles 24/7 para cualquier tipo de evento.",
+    "category": "transportacion",
+    "services": [
+      {
+        "name": "Transporte de Novios",
+        "description": "Transporte especial para novios en vehículo de lujo (limusina, Mercedes-Benz o BMW). Incluye chofer profesional uniformado, decoración floral interior, bebidas de cortesía, aire acondicionado, sistema de sonido y coordinación con el timeline del evento. Servicio de 4 horas con traslados múltiples.",
+        "price": 400,
+        "isActive": true
+      },
+      {
+        "name": "Transporte de Invitados",
+        "description": "Transporte para invitados en vehículos cómodos (van ejecutiva o autobús). Incluye chofer profesional, aire acondicionado, sistema de sonido, coordinación de horarios y servicio puerta a puerta. Perfecto para trasladar grupos de invitados desde hoteles o puntos de encuentro.",
+        "price": 150,
+        "isActive": true
+      },
+      {
+        "name": "Flota Completa",
+        "description": "Servicio completo de transporte para todo el evento. Incluye limusina para novios, transporte para invitados, coordinación completa de horarios, choferes profesionales uniformados, decoración floral en vehículos principales y servicio de 8 horas. Perfecto para bodas con múltiples ubicaciones.",
+        "price": 800,
+        "isActive": true
+      }
+    ],
+    "pricing": {
+      "basePrice": 400,
+      "currency": "USD",
+      "pricePerPerson": 0,
+      "minimumOrder": 0,
+      "discounts": [
+        {
+          "type": "percentage",
+          "value": 10,
+          "minimumQuantity": 1,
+          "validUntil": "2024-08-31T23:59:59.000Z"
+        }
+      ]
+    },
+    "location": {
+      "address": "Av. Chapultepec 654, Col. Roma",
+      "city": "Ciudad de México",
+      "state": "CDMX",
+      "zipCode": "06700",
+      "coordinates": {
+        "latitude": 19.4194,
+        "longitude": -99.1550
+      }
+    },
+    "contact": {
+      "phone": "+52 55 9999 1111",
+      "email": "info@transporteelegante.com",
+      "website": "https://transporteelegante.com",
+      "socialMedia": {
+        "facebook": "https://facebook.com/transporteelegante",
+        "instagram": "https://instagram.com/transporteelegante"
+      }
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800",
+        "alt": "Vehículo de lujo para bodas",
+        "isMain": true
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800",
+        "alt": "Flota de vehículos elegantes",
+        "isMain": false
+      }
+    ],
+    "isActive": true,
+    "isVerified": true,
+    "reviews": [
+      {
+        "user": "507f1f77bcf86cd799439018",
+        "rating": 5,
+        "comment": "Servicio impecable, vehículos de lujo y choferes muy profesionales",
+        "createdAt": "2024-02-01T10:00:00.000Z"
+      }
+    ],
+    "averageRating": 5.0,
+    "totalReviews": 1,
+    "tags": ["transporte", "lujo", "bodas", "chofer"],
+    "availability": {
+      "monday": { "start": "06:00", "end": "22:00", "isAvailable": true },
+      "tuesday": { "start": "06:00", "end": "22:00", "isAvailable": true },
+      "wednesday": { "start": "06:00", "end": "22:00", "isAvailable": true },
+      "thursday": { "start": "06:00", "end": "22:00", "isAvailable": true },
+      "friday": { "start": "06:00", "end": "23:00", "isAvailable": true },
+      "saturday": { "start": "05:00", "end": "24:00", "isAvailable": true },
+      "sunday": { "start": "05:00", "end": "23:00", "isAvailable": true }
+    },
+    "stats": {
+      "totalEvents": 0,
+      "completedEvents": 0,
+      "cancelledEvents": 0,
+      "totalRevenue": 0,
+      "averageRating": 5.0,
+      "responseTime": 2
+    },
+    "notifications": {
+      "newEventRequest": true,
+      "eventUpdates": true,
+      "paymentReminders": true,
+      "reviewRequests": true
+    }
+  },
+  {
+    "businessName": "Decoraciones Modernas",
+    "description": "Somos especialistas en decoración moderna y minimalista para eventos con más de 7 años de experiencia. Nuestro equipo de diseñadores crea ambientes únicos y elegantes utilizando materiales premium, iluminación LED de última generación y técnicas de diseño contemporáneo. Especialistas en bodas modernas, eventos corporativos y celebraciones minimalistas. Ofrecemos consultoría de diseño gratuita, renderizados 3D del proyecto, instalación profesional y coordinación completa del evento.",
+    "category": "decoracion",
+    "services": [
+      {
+        "name": "Decoración Completa Salón",
+        "description": "Decoración completa del salón de eventos con estilo moderno. Incluye diseño 3D personalizado, instalación de estructuras decorativas, iluminación LED ambiental, centros de mesa modernos, decoración de mesas, arcos minimalistas, decoración de paredes, alfombras decorativas y coordinación completa. Incluye consultoría de diseño y renderizados 3D.",
+        "price": 2000,
+        "isActive": true
+      },
+      {
+        "name": "Centros de Mesa Modernos",
+        "description": "Centros de mesa con diseño moderno y minimalista. Incluye bases de mármol, cristal o metal, flores frescas o artificiales, velas LED, elementos decorativos modernos y diferentes alturas. Diseños personalizados según el tema del evento. Incluye instalación y coordinación.",
+        "price": 80,
+        "isActive": true
+      },
+      {
+        "name": "Iluminación Ambiental",
+        "description": "Sistema de iluminación ambiental para crear atmósfera especial. Incluye luces LED de colores, iluminación de ambiente, focos direccionales, luces de mesa, iluminación de pasillos, efectos de luz dinámicos y sincronización con música. Perfecto para crear ambientes únicos y memorables.",
+        "price": 500,
+        "isActive": true
+      }
+    ],
+    "pricing": {
+      "basePrice": 2000,
+      "currency": "USD",
+      "pricePerPerson": 0,
+      "minimumOrder": 500,
+      "discounts": [
+        {
+          "type": "percentage",
+          "value": 12,
+          "minimumQuantity": 1,
+          "validUntil": "2024-07-31T23:59:59.000Z"
+        }
+      ]
+    },
+    "location": {
+      "address": "Calle Moderna 987, Col. Polanco",
+      "city": "Ciudad de México",
+      "state": "CDMX",
+      "zipCode": "11560",
+      "coordinates": {
+        "latitude": 19.4333,
+        "longitude": -99.1833
+      }
+    },
+    "contact": {
+      "phone": "+52 55 3333 4444",
+      "email": "info@decoracionesmodernas.com",
+      "website": "https://decoracionesmodernas.com",
+      "socialMedia": {
+        "instagram": "https://instagram.com/decoracionesmodernas",
+        "facebook": "https://facebook.com/decoracionesmodernas"
+      }
+    },
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1519167758481-83f29c4b4a6a?w=800",
+        "alt": "Decoración moderna elegante",
+        "isMain": true
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1519167758481-83f29c4b4a6a?w=800",
+        "alt": "Centros de mesa modernos",
+        "isMain": false
+      }
+    ],
+    "isActive": true,
+    "isVerified": true,
+    "reviews": [
+      {
+        "user": "507f1f77bcf86cd799439019",
+        "rating": 5,
+        "comment": "Decoración espectacular, muy moderna y elegante",
+        "createdAt": "2024-02-08T14:20:00.000Z"
+      },
+      {
+        "user": "507f1f77bcf86cd799439020",
+        "rating": 4,
+        "comment": "Excelente trabajo, muy profesionales",
+        "createdAt": "2024-02-12T16:45:00.000Z"
+      }
+    ],
+    "averageRating": 4.5,
+    "totalReviews": 2,
+    "tags": ["decoración", "moderna", "minimalista", "iluminación"],
+    "availability": {
+      "monday": { "start": "09:00", "end": "18:00", "isAvailable": true },
+      "tuesday": { "start": "09:00", "end": "18:00", "isAvailable": true },
+      "wednesday": { "start": "09:00", "end": "18:00", "isAvailable": true },
+      "thursday": { "start": "09:00", "end": "18:00", "isAvailable": true },
+      "friday": { "start": "09:00", "end": "19:00", "isAvailable": true },
+      "saturday": { "start": "08:00", "end": "20:00", "isAvailable": true },
+      "sunday": { "start": "08:00", "end": "18:00", "isAvailable": true }
+    },
+    "stats": {
+      "totalEvents": 0,
+      "completedEvents": 0,
+      "cancelledEvents": 0,
+      "totalRevenue": 0,
+      "averageRating": 4.5,
+      "responseTime": 2
+    },
+    "notifications": {
+      "newEventRequest": true,
+      "eventUpdates": true,
+      "paymentReminders": true,
+      "reviewRequests": true
+    }
+  }
+]

@@ -16,6 +16,7 @@ import authRoutes from './routes/authRoutes.js';
 import userRoutes from './routes/userRoutes.js';
 import eventRoutes from './routes/eventRoutes.js';
 import providerRoutes from './routes/providerRoutes.js';
+import paymentRoutes from './routes/paymentRoutes.js';
 
 const app = express();
 
@@ -112,6 +113,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/events', eventRoutes);
 app.use('/api/providers', providerRoutes);
+app.use('/api/payments', paymentRoutes);
 
 // Ruta raíz
 app.get('/', (req, res) => {

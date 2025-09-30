@@ -14,6 +14,11 @@ export const updateGuestStatus = apiEventService.updateGuestStatus;
 export const addChecklistItem = apiEventService.addChecklistItem;
 export const completeChecklistItem = apiEventService.completeChecklistItem;
 export const addProvider = apiEventService.addProvider;
+export const updateProviderStatus = apiEventService.updateProviderStatus;
+export const updateProviderPayment = apiEventService.updateProviderPayment;
+export const addProviderDocument = apiEventService.addProviderDocument;
+export const removeProvider = apiEventService.removeProvider;
+export const getAvailableProviders = apiEventService.getAvailableProviders;
 
 // También exportar el servicio completo
 export { apiEventService as eventService };
@@ -29,7 +34,12 @@ const eventServiceDefault = {
     updateGuestStatus,
     addChecklistItem,
     completeChecklistItem,
-    addProvider
+    addProvider,
+    updateProviderStatus,
+    updateProviderPayment,
+    addProviderDocument,
+    removeProvider,
+    getAvailableProviders
 };
 
 export default eventServiceDefault;

@@ -10,7 +10,12 @@ import {
   updateGuestStatus,
   addChecklistItem,
   completeChecklistItem,
-  addProvider
+  addProvider,
+  updateProviderStatus,
+  updateProviderPayment,
+  addProviderDocument,
+  removeProvider,
+  getAvailableProviders
 } from '../controllers/eventController.js';
 import { authenticate } from '../middleware/authMiddleware.js';
 import { authorize } from '../middleware/roleMiddleware.js';
@@ -75,6 +80,36 @@ router.post('/:id/providers',
   authenticate,
   authorize('cumpleañero', 'planeador_bodas', 'organizador'),
   addProvider
+);
+
+router.get('/:id/providers/available',
+  authenticate,
+  authorize('cumpleañero', 'planeador_bodas', 'organizador'),
+  getAvailableProviders
+);
+
+router.put('/:eventId/providers/:providerId/status',
+  authenticate,
+  authorize('cumpleañero', 'planeador_bodas', 'organizador'),
+  updateProviderStatus
+);
+
+router.put('/:eventId/providers/:providerId/payment',
+  authenticate,
+  authorize('cumpleañero', 'planeador_bodas', 'organizador'),
+  updateProviderPayment
+);
+
+router.post('/:eventId/providers/:providerId/documents',
+  authenticate,
+  authorize('cumpleañero', 'planeador_bodas', 'organizador'),
+  addProviderDocument
+);
+
+router.delete('/:eventId/providers/:providerId',
+  authenticate,
+  authorize('cumpleañero', 'planeador_bodas', 'organizador'),
+  removeProvider
 );
 
 export default router;

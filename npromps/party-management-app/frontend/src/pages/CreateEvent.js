@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useEvents } from '../contexts/EventContext';
+import ProviderSelector from '../components/ProviderSelector';
+import PaymentModal from '../components/PaymentModal';
 import {
   CalendarDaysIcon,
   MapPinIcon,
@@ -13,7 +15,8 @@ import {
   AcademicCapIcon,
   TrophyIcon,
   MusicalNoteIcon,
-  TagIcon
+  TagIcon,
+  CreditCardIcon
 } from '@heroicons/react/24/outline';
 
 const CreateEvent = () => {
@@ -43,6 +46,10 @@ const CreateEvent = () => {
     theme: '',
     specialRequirements: ''
   });
+
+  const [selectedProviders, setSelectedProviders] = useState([]);
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [createdEvent, setCreatedEvent] = useState(null);
 
   const [errors, setErrors] = useState({});
 
@@ -136,17 +143,53 @@ const CreateEvent = () => {
       return;
     }
 
+    // Validar que los proveedores seleccionados tengan servicio y precio
+    const invalidProviders = selectedProviders.filter(provider =>
+      !provider.service.trim() || provider.price <= 0
+    );
+
+    if (invalidProviders.length > 0) {
+      setErrors(prev => ({
+        ...prev,
+        providers: 'Todos los proveedores deben tener servicio y precio válidos'
+      }));
+      return;
+    }
+
     console.log('Datos del formulario:', formData);
+    console.log('Proveedores seleccionados:', selectedProviders);
 
     try {
-      const result = await createEvent(formData);
+      const eventData = {
+        ...formData,
+        providers: selectedProviders.map(provider => ({
+          providerId: provider._id,
+          service: provider.service,
+          price: provider.price,
+          priority: provider.priority,
+          isEssential: provider.isEssential
+        }))
+      };
+
+      const result = await createEvent(eventData);
       console.log('Resultado de createEvent:', result);
       if (result.success) {
-        navigate('/dashboard');
+        setCreatedEvent(result.data);
+        // Si hay proveedores seleccionados, mostrar modal de pago
+        if (selectedProviders.length > 0) {
+          setShowPaymentModal(true);
+        } else {
+          navigate('/dashboard');
+        }
       }
     } catch (error) {
       console.error('Error al crear evento:', error);
     }
+  };
+
+  const handlePaymentSuccess = (paymentData) => {
+    console.log('Pago procesado exitosamente:', paymentData);
+    navigate('/dashboard');
   };
 
   return (
@@ -397,6 +440,26 @@ const CreateEvent = () => {
               </div>
             </div>
 
+            {/* Proveedores */}
+            <div className="space-y-6">
+              <h2 className="text-xl font-semibold text-secondary-900 flex items-center space-x-2">
+                <TagIcon className="w-5 h-5 text-primary-600" />
+                <span>Proveedores</span>
+              </h2>
+
+              <ProviderSelector
+                selectedProviders={selectedProviders}
+                onSelectionChange={setSelectedProviders}
+                eventDate={formData.date}
+                eventCity={formData.location.city}
+                className="space-y-4"
+              />
+
+              {errors.providers && (
+                <p className="text-danger-500 text-sm">{errors.providers}</p>
+              )}
+            </div>
+
             {/* Información Adicional */}
             <div className="space-y-6">
               <h2 className="text-xl font-semibold text-secondary-900 flex items-center space-x-2">
@@ -480,6 +543,17 @@ const CreateEvent = () => {
           </form>
         </div>
       </div>
+
+      {/* Modal de Pago */}
+      {showPaymentModal && createdEvent && (
+        <PaymentModal
+          isOpen={showPaymentModal}
+          onClose={() => setShowPaymentModal(false)}
+          event={createdEvent}
+          selectedProviders={selectedProviders}
+          onPaymentSuccess={handlePaymentSuccess}
+        />
+      )}
     </div>
   );
 };

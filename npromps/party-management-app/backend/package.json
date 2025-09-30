@@ -7,7 +7,8 @@
   "scripts": {
     "start": "node src/app.js",
     "dev": "nodemon src/app.js",
-    "seed": "node src/utils/seedData.js"
+    "seed": "node src/utils/seedData.js",
+    "import-providers": "node scripts/import-providers.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

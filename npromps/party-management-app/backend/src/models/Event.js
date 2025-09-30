@@ -232,7 +232,8 @@ const eventSchema = new mongoose.Schema({
         },
         currency: {
             type: String,
-            default: 'MXN',
+            default: 'USD',
+            enum: ['USD', 'EUR', 'ARS', 'MXN'],
             length: [3, 'Código de moneda inválido']
         }
     },
@@ -260,33 +261,160 @@ const eventSchema = new mongoose.Schema({
         provider: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Provider',
-            required: true
+            required: [true, 'El proveedor es obligatorio']
         },
         service: {
             type: String,
             required: [true, 'El servicio es obligatorio'],
-            trim: true
+            trim: true,
+            maxlength: [100, 'El servicio no puede tener más de 100 caracteres']
+        },
+        description: {
+            type: String,
+            trim: true,
+            maxlength: [500, 'La descripción no puede tener más de 500 caracteres']
         },
         price: {
             type: Number,
             required: [true, 'El precio es obligatorio'],
             min: [0, 'El precio no puede ser negativo']
         },
+        currency: {
+            type: String,
+            default: 'USD',
+            enum: ['USD', 'EUR', 'ARS', 'MXN']
+        },
+        // Nuevos campos para manejo de precios por hora
+        pricingType: {
+            type: String,
+            enum: ['fixed', 'hourly', 'per_person', 'per_item'],
+            default: 'fixed'
+        },
+        hours: {
+            type: Number,
+            min: 0
+        },
+        people: {
+            type: Number,
+            min: 0
+        },
+        items: {
+            type: Number,
+            min: 0
+        },
+        calculatedPrice: {
+            type: Number,
+            min: 0
+        },
         status: {
             type: String,
             enum: {
-                values: ['requested', 'quoted', 'confirmed', 'completed', 'cancelled'],
+                values: ['requested', 'quoted', 'confirmed', 'in_progress', 'completed', 'cancelled'],
                 message: 'Estado del proveedor inválido'
             },
             default: 'requested'
         },
+        priority: {
+            type: String,
+            enum: {
+                values: ['low', 'medium', 'high', 'urgent'],
+                message: 'Prioridad inválida'
+            },
+            default: 'medium'
+        },
+        startDate: {
+            type: Date,
+            validate: {
+                validator: function (startDate) {
+                    return !startDate || startDate >= this.date;
+                },
+                message: 'La fecha de inicio del servicio debe ser posterior o igual a la fecha del evento'
+            }
+        },
+        endDate: {
+            type: Date,
+            validate: {
+                validator: function (endDate) {
+                    return !endDate || !this.startDate || endDate >= this.startDate;
+                },
+                message: 'La fecha de fin del servicio debe ser posterior a la fecha de inicio'
+            }
+        },
+        contactPerson: {
+            name: {
+                type: String,
+                trim: true,
+                maxlength: [100, 'El nombre del contacto no puede tener más de 100 caracteres']
+            },
+            phone: {
+                type: String,
+                trim: true,
+                match: [/^[+]?[\d\s\-\(\)]+$/, 'Formato de teléfono inválido']
+            },
+            email: {
+                type: String,
+                lowercase: true,
+                trim: true,
+                match: [/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/, 'Email inválido']
+            }
+        },
         notes: {
             type: String,
-            maxlength: [300, 'Las notas no pueden tener más de 300 caracteres']
+            maxlength: [500, 'Las notas no pueden tener más de 500 caracteres']
         },
         contractUrl: {
-            type: String
-        }
+            type: String,
+            match: [/^https?:\/\/.+/, 'URL de contrato inválida']
+        },
+        documents: [{
+            name: {
+                type: String,
+                required: true,
+                trim: true
+            },
+            url: {
+                type: String,
+                required: true,
+                match: [/^https?:\/\/.+/, 'URL de documento inválida']
+            },
+            type: {
+                type: String,
+                enum: ['contract', 'invoice', 'quote', 'other'],
+                default: 'other'
+            },
+            uploadedAt: {
+                type: Date,
+                default: Date.now
+            }
+        }],
+        paymentStatus: {
+            type: String,
+            enum: {
+                values: ['pending', 'partial', 'paid', 'overdue'],
+                message: 'Estado de pago inválido'
+            },
+            default: 'pending'
+        },
+        paymentAmount: {
+            paid: {
+                type: Number,
+                min: [0, 'El monto pagado no puede ser negativo'],
+                default: 0
+            },
+            total: {
+                type: Number,
+                min: [0, 'El monto total no puede ser negativo']
+            }
+        },
+        isEssential: {
+            type: Boolean,
+            default: false
+        },
+        tags: [{
+            type: String,
+            trim: true,
+            maxlength: [30, 'Cada etiqueta no puede tener más de 30 caracteres']
+        }]
     }],
 
     status: {
@@ -416,6 +544,54 @@ eventSchema.methods.completeChecklistItem = function (taskId) {
         return this.save();
     }
     throw new Error('Tarea no encontrada');
+};
+
+// Método para agregar proveedor al evento
+eventSchema.methods.addProvider = function (providerData) {
+    this.providers.push(providerData);
+    return this.save();
+};
+
+// Método para actualizar estado de proveedor
+eventSchema.methods.updateProviderStatus = function (providerId, status) {
+    const provider = this.providers.id(providerId);
+    if (provider) {
+        provider.status = status;
+        return this.save();
+    }
+    throw new Error('Proveedor no encontrado');
+};
+
+// Método para actualizar pago de proveedor
+eventSchema.methods.updateProviderPayment = function (providerId, paymentData) {
+    const provider = this.providers.id(providerId);
+    if (provider) {
+        provider.paymentStatus = paymentData.status;
+        provider.paymentAmount.paid = paymentData.paid;
+        provider.paymentAmount.total = paymentData.total;
+        return this.save();
+    }
+    throw new Error('Proveedor no encontrado');
+};
+
+// Método para agregar documento a proveedor
+eventSchema.methods.addProviderDocument = function (providerId, documentData) {
+    const provider = this.providers.id(providerId);
+    if (provider) {
+        provider.documents.push(documentData);
+        return this.save();
+    }
+    throw new Error('Proveedor no encontrado');
+};
+
+// Método para remover proveedor del evento
+eventSchema.methods.removeProvider = function (providerId) {
+    const provider = this.providers.id(providerId);
+    if (provider) {
+        provider.remove();
+        return this.save();
+    }
+    throw new Error('Proveedor no encontrado');
 };
 
 const Event = mongoose.model('Event', eventSchema);
