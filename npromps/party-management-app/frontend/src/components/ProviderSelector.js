@@ -42,11 +42,16 @@ const ProviderSelector = ({
   ];
 
   useEffect(() => {
+    console.log('🔄 Cargando proveedores al montar componente...');
+    fetchProviders();
+  }, [eventDate, eventCity]);
+
+  useEffect(() => {
     if (showModal) {
       console.log('🔄 Abriendo modal, obteniendo proveedores...');
       fetchProviders();
     }
-  }, [showModal, eventDate, eventCity]);
+  }, [showModal]);
 
   useEffect(() => {
     filterProviders();
