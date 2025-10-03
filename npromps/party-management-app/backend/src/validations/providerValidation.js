@@ -35,13 +35,73 @@ export const createProviderSchema = Joi.object({
       name: Joi.string()
         .min(3)
         .max(100)
-        .required(),
+        .required()
+        .messages({
+          'string.min': 'El nombre del servicio debe tener al menos 3 caracteres',
+          'string.max': 'El nombre del servicio no puede tener más de 100 caracteres',
+          'any.required': 'El nombre del servicio es requerido'
+        }),
       description: Joi.string()
         .max(500)
-        .optional(),
-      price: Joi.number()
+        .optional()
+        .messages({
+          'string.max': 'La descripción del servicio no puede tener más de 500 caracteres'
+        }),
+      basePrice: Joi.number()
         .min(0)
         .optional()
+        .messages({
+          'number.min': 'El precio base debe ser mayor o igual a 0'
+        }),
+      currency: Joi.string()
+        .valid('USD', 'EUR', 'ARS', 'MXN')
+        .default('USD'),
+      pricingType: Joi.string()
+        .valid('fixed', 'hourly', 'per_person', 'per_item')
+        .default('fixed'),
+      hourlyRate: Joi.number()
+        .min(0)
+        .optional()
+        .messages({
+          'number.min': 'La tarifa por hora debe ser mayor o igual a 0'
+        }),
+      minimumHours: Joi.number()
+        .min(0)
+        .default(0)
+        .messages({
+          'number.min': 'Las horas mínimas deben ser mayor o igual a 0'
+        }),
+      maximumHours: Joi.number()
+        .min(0)
+        .optional()
+        .messages({
+          'number.min': 'Las horas máximas deben ser mayor o igual a 0'
+        }),
+      // Imágenes específicas del servicio
+      images: Joi.array()
+        .items(Joi.object({
+          url: Joi.string()
+            .uri()
+            .required()
+            .messages({
+              'string.uri': 'La URL de la imagen del servicio debe ser válida',
+              'any.required': 'La URL de la imagen del servicio es requerida'
+            }),
+          alt: Joi.string()
+            .max(100)
+            .optional(),
+          isMain: Joi.boolean()
+            .default(false),
+          uploadedAt: Joi.date()
+            .default(Date.now)
+        }))
+        .max(5)
+        .optional()
+        .messages({
+          'array.max': 'No se pueden tener más de 5 imágenes por servicio'
+        }),
+      isActive: Joi.boolean()
+        .default(true)
     }))
     .min(1)
     .required()
@@ -138,22 +198,56 @@ export const createProviderSchema = Joi.object({
     }).optional()
   }).required(),
 
+  // Imágenes principales del proveedor
+  images: Joi.array()
+    .items(Joi.object({
+      url: Joi.string()
+        .uri()
+        .required()
+        .messages({
+          'string.uri': 'La URL de la imagen debe ser válida',
+          'any.required': 'La URL de la imagen es requerida'
+        }),
+      alt: Joi.string()
+        .max(100)
+        .optional(),
+      isMain: Joi.boolean()
+        .default(false),
+      uploadedAt: Joi.date()
+        .default(Date.now)
+    }))
+    .max(10)
+    .optional()
+    .messages({
+      'array.max': 'No se pueden tener más de 10 imágenes principales'
+    }),
+
+  // Portfolio extendido del proveedor
   portfolio: Joi.array()
     .items(Joi.object({
       imageUrl: Joi.string()
         .uri()
-        .required(),
+        .required()
+        .messages({
+          'string.uri': 'La URL de la imagen del portfolio debe ser válida',
+          'any.required': 'La URL de la imagen del portfolio es requerida'
+        }),
       title: Joi.string()
         .max(100)
         .optional(),
       description: Joi.string()
         .max(500)
-        .optional()
+        .optional(),
+      category: Joi.string()
+        .valid('work', 'setup', 'event', 'product', 'team', 'other')
+        .default('work'),
+      uploadedAt: Joi.date()
+        .default(Date.now)
     }))
-    .max(20)
+    .max(50)
     .optional()
     .messages({
-      'array.max': 'No se pueden tener más de 20 imágenes en el portfolio'
+      'array.max': 'No se pueden tener más de 50 imágenes en el portfolio'
     }),
 
   availability: Joi.object({

@@ -66,6 +66,31 @@ const ProviderCard = ({ provider, showActions = true, className = '' }) => {
         return labels[category] || category;
     };
 
+    // Función para obtener la imagen del proveedor
+    const getProviderImage = () => {
+        // Prioridad: imagen principal de images > primera imagen de portfolio > primera imagen de servicios
+        if (provider.images && provider.images.length > 0) {
+            const mainImage = provider.images.find(img => img.isMain);
+            return mainImage ? mainImage.url : provider.images[0].url;
+        }
+
+        if (provider.portfolio && provider.portfolio.length > 0) {
+            return provider.portfolio[0].imageUrl;
+        }
+
+        // Buscar en servicios si tienen imágenes
+        if (provider.services && provider.services.length > 0) {
+            for (const service of provider.services) {
+                if (service.images && service.images.length > 0) {
+                    const mainServiceImage = service.images.find(img => img.isMain);
+                    return mainServiceImage ? mainServiceImage.url : service.images[0].url;
+                }
+            }
+        }
+
+        return null;
+    };
+
     const renderStars = (rating) => {
         const stars = [];
         const fullStars = Math.floor(rating);
@@ -103,9 +128,9 @@ const ProviderCard = ({ provider, showActions = true, className = '' }) => {
         >
             {/* Imagen del Proveedor */}
             <div className="relative h-48 overflow-hidden rounded-t-2xl">
-                {provider.portfolio && provider.portfolio.length > 0 && !imageError ? (
+                {getProviderImage() && !imageError ? (
                     <img
-                        src={provider.portfolio[0].imageUrl}
+                        src={getProviderImage()}
                         alt={provider.businessName}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                         onError={() => setImageError(true)}

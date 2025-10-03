@@ -238,6 +238,71 @@ export const providerService = {
   updateRequestStatus: async (providerId, requestId, status) => {
     const response = await api.put(`/providers/${providerId}/requests/${requestId}`, { status });
     return response.data;
+  },
+
+  // Servicios para gestión de imágenes
+  uploadProviderImages: async (providerId, images) => {
+    const formData = new FormData();
+    images.forEach((image, index) => {
+      formData.append(`images`, image);
+    });
+
+    const response = await api.post(`/providers/${providerId}/images`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return response.data;
+  },
+
+  updateProviderImages: async (providerId, images) => {
+    const response = await api.put(`/providers/${providerId}/images`, { images });
+    return response.data;
+  },
+
+  deleteProviderImage: async (providerId, imageId) => {
+    const response = await api.delete(`/providers/${providerId}/images/${imageId}`);
+    return response.data;
+  },
+
+  uploadServiceImages: async (providerId, serviceId, images) => {
+    const formData = new FormData();
+    images.forEach((image, index) => {
+      formData.append(`images`, image);
+    });
+
+    const response = await api.post(`/providers/${providerId}/services/${serviceId}/images`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return response.data;
+  },
+
+  updateServiceImages: async (providerId, serviceId, images) => {
+    const response = await api.put(`/providers/${providerId}/services/${serviceId}/images`, { images });
+    return response.data;
+  },
+
+  deleteServiceImage: async (providerId, serviceId, imageId) => {
+    const response = await api.delete(`/providers/${providerId}/services/${serviceId}/images/${imageId}`);
+    return response.data;
+  },
+
+  // Servicios para portfolio
+  updatePortfolio: async (providerId, portfolio) => {
+    const response = await api.put(`/providers/${providerId}/portfolio`, { portfolio });
+    return response.data;
+  },
+
+  addPortfolioItem: async (providerId, portfolioItem) => {
+    const response = await api.post(`/providers/${providerId}/portfolio`, portfolioItem);
+    return response.data;
+  },
+
+  deletePortfolioItem: async (providerId, portfolioItemId) => {
+    const response = await api.delete(`/providers/${providerId}/portfolio/${portfolioItemId}`);
+    return response.data;
   }
 };
 

@@ -37,6 +37,13 @@
         "hourlyRate": 50,
         "minimumHours": 4,
         "maximumHours": 12,
+        "images": [
+          {
+            "url": "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=800",
+            "alt": "Bartender profesional preparando cócteles",
+            "isMain": true
+          }
+        ],
         "isActive": true
       }
     ],
@@ -83,6 +90,26 @@
         "url": "https://images.unsplash.com/photo-1556909114-f6e7ad7b0a4a?w=800",
         "alt": "Servicio de catering en evento",
         "isMain": false
+      }
+    ],
+    "portfolio": [
+      {
+        "imageUrl": "https://images.unsplash.com/photo-1556909114-f6e7ad7b0a4a?w=800",
+        "title": "Catering de Boda Premium",
+        "description": "Servicio completo de catering para boda de lujo con menú gourmet",
+        "category": "event"
+      },
+      {
+        "imageUrl": "https://images.unsplash.com/photo-1556909114-f6e7ad7b0a4a?w=800",
+        "title": "Platos Principales",
+        "description": "Selección de platos principales preparados por nuestros chefs",
+        "category": "product"
+      },
+      {
+        "imageUrl": "https://images.unsplash.com/photo-1556909114-f6e7ad7b0a4a?w=800",
+        "title": "Equipo de Trabajo",
+        "description": "Nuestro equipo profesional de chefs y meseros",
+        "category": "team"
       }
     ],
     "isActive": true,

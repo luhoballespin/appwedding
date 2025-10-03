@@ -37,6 +37,22 @@ const serviceSchema = new mongoose.Schema({
         type: Number,
         min: 0
     },
+    // Imágenes específicas del servicio
+    images: [{
+        url: {
+            type: String,
+            required: true
+        },
+        alt: String,
+        isMain: {
+            type: Boolean,
+            default: false
+        },
+        uploadedAt: {
+            type: Date,
+            default: Date.now
+        }
+    }],
     isActive: {
         type: Boolean,
         default: true
@@ -166,6 +182,7 @@ const providerSchema = new mongoose.Schema({
     pricing: pricingSchema,
     location: locationSchema,
     contact: contactSchema,
+    // Imágenes principales del proveedor (para galería principal)
     images: [{
         url: {
             type: String,
@@ -175,6 +192,28 @@ const providerSchema = new mongoose.Schema({
         isMain: {
             type: Boolean,
             default: false
+        },
+        uploadedAt: {
+            type: Date,
+            default: Date.now
+        }
+    }],
+    // Portfolio extendido del proveedor
+    portfolio: [{
+        imageUrl: {
+            type: String,
+            required: true
+        },
+        title: String,
+        description: String,
+        category: {
+            type: String,
+            enum: ['work', 'setup', 'event', 'product', 'team', 'other'],
+            default: 'work'
+        },
+        uploadedAt: {
+            type: Date,
+            default: Date.now
         }
     }],
     owner: {
