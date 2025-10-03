@@ -17,6 +17,7 @@ import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import ProviderPanel from './pages/ProviderPanel';
 import UserProfile from './pages/UserProfile';
+import Settings from './pages/Settings';
 import CreateEvent from './pages/CreateEvent';
 import EventList from './pages/EventList';
 import EventDetail from './pages/EventDetail';
@@ -137,7 +138,7 @@ function App() {
                   path="/settings"
                   element={
                     <ProtectedRoute>
-                      <div>Settings Page</div>
+                      <Settings />
                     </ProtectedRoute>
                   }
                 />

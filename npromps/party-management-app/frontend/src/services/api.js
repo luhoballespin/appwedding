@@ -243,13 +243,19 @@ export const providerService = {
 
 // Servicios de usuarios
 export const userService = {
-  getUserProfile: async () => {
-    const response = await api.get('/users/profile');
+  getUserProfile: async (userId = null) => {
+    const endpoint = userId ? `/users/profile/${userId}` : '/users/profile';
+    const response = await api.get(endpoint);
     return response.data;
   },
 
-  updateUserProfile: async (profileData) => {
+  updateProfile: async (profileData) => {
     const response = await api.put('/users/profile', profileData);
+    return response.data;
+  },
+
+  changePassword: async (passwordData) => {
+    const response = await api.put('/users/change-password', passwordData);
     return response.data;
   },
 
@@ -265,9 +271,20 @@ export const userService = {
     return response.data;
   },
 
+  getUserStats: async (userId = null) => {
+    const endpoint = userId ? `/users/stats/${userId}` : '/users/stats';
+    const response = await api.get(endpoint);
+    return response.data;
+  },
+
   deleteAccount: async () => {
     const response = await api.delete('/users/account');
     return response.data;
+  },
+
+  // Alias para compatibilidad
+  updateUserProfile: async (profileData) => {
+    return userService.updateProfile(profileData);
   }
 };
 

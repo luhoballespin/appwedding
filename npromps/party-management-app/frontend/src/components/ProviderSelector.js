@@ -125,12 +125,14 @@ const ProviderSelector = ({
         status: 'requested',
         priority: 'medium',
         isEssential: false,
-        // Nuevos campos para precios por hora
+        // Nuevos campos para precios por hora con valores por defecto válidos
         pricingType: 'fixed',
         hours: 1,
         people: 1,
         items: 1,
-        calculatedPrice: 0
+        calculatedPrice: 0,
+        // Asegurar que los campos numéricos sean válidos
+        currency: provider.pricing?.currency || 'USD'
       }];
       onSelectionChange(updated);
     }
@@ -141,8 +143,9 @@ const ProviderSelector = ({
       if (provider._id === providerId) {
         const updatedProvider = { ...provider, [field]: value };
 
-        // Si se actualiza el tipo de precio, horas, personas o items, recalcular el precio
-        if (['pricingType', 'hours', 'people', 'items'].includes(field)) {
+        // Si se actualiza el servicio, tipo de precio, horas, personas o items, recalcular el precio
+        if (['service', 'pricingType', 'hours', 'people', 'items'].includes(field)) {
+          console.log(`🔄 Actualizando ${field} a:`, value);
           updatedProvider.calculatedPrice = calculateServicePrice(updatedProvider);
         }
 
@@ -154,35 +157,82 @@ const ProviderSelector = ({
   };
 
   const calculateServicePrice = (provider) => {
+    console.log('🔍 Calculando precio para proveedor:', provider);
+
     const service = provider.services?.find(s => s.name === provider.service);
-    if (!service) return 0;
+    if (!service) {
+      console.log('❌ Servicio no encontrado');
+      return 0;
+    }
+
+    console.log('📋 Servicio encontrado:', service);
+    console.log('💰 Tipo de precio:', service.pricingType || provider.pricingType);
 
     let totalPrice = 0;
+    const pricingType = service.pricingType || provider.pricingType;
 
-    switch (service.pricingType) {
+    // Validar que los valores numéricos sean válidos
+    const isValidNumber = (value) => {
+      return typeof value === 'number' && !isNaN(value) && isFinite(value) && value >= 0;
+    };
+
+    switch (pricingType) {
       case 'hourly':
-        totalPrice = service.hourlyRate * (provider.hours || 1);
+        const hourlyRate = service.hourlyRate || service.basePrice || 0;
+        const hours = provider.hours || 1;
+        if (isValidNumber(hourlyRate) && isValidNumber(hours)) {
+          totalPrice = hourlyRate * hours;
+          console.log(`⏰ Precio por hora: ${hourlyRate} × ${hours} = ${totalPrice}`);
+        }
         break;
+
       case 'per_person':
-        totalPrice = service.basePrice * (provider.people || 1);
+        const pricePerPerson = service.basePrice || service.price || 0;
+        const people = provider.people || 1;
+        if (isValidNumber(pricePerPerson) && isValidNumber(people)) {
+          totalPrice = pricePerPerson * people;
+          console.log(`👥 Precio por persona: ${pricePerPerson} × ${people} = ${totalPrice}`);
+        }
         break;
+
       case 'per_item':
-        totalPrice = service.basePrice * (provider.items || 1);
+        const pricePerItem = service.basePrice || service.price || 0;
+        const items = provider.items || 1;
+        if (isValidNumber(pricePerItem) && isValidNumber(items)) {
+          totalPrice = pricePerItem * items;
+          console.log(`📦 Precio por item: ${pricePerItem} × ${items} = ${totalPrice}`);
+        }
         break;
+
       case 'fixed':
       default:
-        totalPrice = service.basePrice;
+        const fixedPrice = service.basePrice || service.price || 0;
+        if (isValidNumber(fixedPrice)) {
+          totalPrice = fixedPrice;
+          console.log(`💲 Precio fijo: ${fixedPrice}`);
+        }
         break;
     }
 
+    console.log('✅ Precio calculado:', totalPrice);
     return totalPrice;
   };
 
   const formatPrice = (price, currency = 'USD') => {
-    return new Intl.NumberFormat('es-ES', {
-      style: 'currency',
-      currency: currency
-    }).format(price);
+    // Validar que el precio sea un número válido
+    if (typeof price !== 'number' || isNaN(price) || !isFinite(price)) {
+      return '0,00 US$';
+    }
+
+    try {
+      return new Intl.NumberFormat('es-ES', {
+        style: 'currency',
+        currency: currency
+      }).format(price);
+    } catch (error) {
+      console.error('Error formateando precio:', error);
+      return `${price.toFixed(2)} ${currency}`;
+    }
   };
 
   const removeProvider = (providerId) => {
