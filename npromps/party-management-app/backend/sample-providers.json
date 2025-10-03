@@ -136,19 +136,25 @@
       {
         "name": "Decoración Completa Bodas",
         "description": "Decoración floral completa para bodas incluyendo centro de mesa elegantes (12-15 unidades), arco floral para ceremonia, ramo de novia y bouquet de lanzamiento, decoración del altar, pasillo floral, decoración de mesas de regalos y cake, guirnaldas florales y instalación completa. Incluye consultoría de diseño y flores de temporada premium.",
-        "price": 1200,
+        "basePrice": 1200,
+        "currency": "USD",
+        "pricingType": "fixed",
         "isActive": true
       },
       {
         "name": "Centros de Mesa",
         "description": "Centros de mesa personalizados para cualquier tipo de evento. Diseños modernos, clásicos o rústicos. Incluye flores frescas, follaje, velas y bases decorativas. Opciones de diferentes alturas y estilos según el tema del evento.",
-        "price": 45,
+        "basePrice": 45,
+        "currency": "USD",
+        "pricingType": "per_item",
         "isActive": true
       },
       {
         "name": "Ramo de Novia",
         "description": "Ramos de novia personalizados con flores frescas de temporada. Incluye consultoría de diseño, prueba de ramo, cinta personalizada y preservación del ramo. Estilos: cascada, redondo, natural, bohemio o clásico.",
-        "price": 150,
+        "basePrice": 150,
+        "currency": "USD",
+        "pricingType": "fixed",
         "isActive": true
       }
     ],
@@ -371,19 +377,25 @@
       {
         "name": "Sesión Completa Bodas",
         "description": "Cobertura completa de boda (8-10 horas) incluyendo preparación de novia, ceremonia, recepción, sesión de pareja, fotos familiares y detalles del evento. Incluye 2 fotógrafos, edición profesional de 500+ fotos, álbum digital de alta resolución, slideshow con música y entrega en 15 días. Incluye sesión de pareja previa gratuita.",
-        "price": 1500,
+        "basePrice": 1500,
+        "currency": "USD",
+        "pricingType": "fixed",
         "isActive": true
       },
       {
         "name": "Sesión de Pareja",
         "description": "Sesión fotográfica romántica para parejas (2-3 horas) en ubicación de tu elección. Incluye edición profesional de 50+ fotos, álbum digital y entrega en 7 días. Perfecta para aniversarios, propuestas o sesiones pre-boda. Incluye consultoría de vestuario y poses.",
-        "price": 300,
+        "basePrice": 300,
+        "currency": "USD",
+        "pricingType": "fixed",
         "isActive": true
       },
       {
         "name": "Fotografía de Eventos",
         "description": "Cobertura fotográfica para eventos corporativos y sociales (4-6 horas). Incluye fotógrafo profesional, edición de 200+ fotos, álbum digital y entrega en 10 días. Perfecto para conferencias, galas, fiestas de cumpleaños y eventos empresariales.",
-        "price": 500,
+        "basePrice": 500,
+        "currency": "USD",
+        "pricingType": "fixed",
         "isActive": true
       }
     ],
@@ -483,19 +495,25 @@
       {
         "name": "Transporte de Novios",
         "description": "Transporte especial para novios en vehículo de lujo (limusina, Mercedes-Benz o BMW). Incluye chofer profesional uniformado, decoración floral interior, bebidas de cortesía, aire acondicionado, sistema de sonido y coordinación con el timeline del evento. Servicio de 4 horas con traslados múltiples.",
-        "price": 400,
+        "basePrice": 400,
+        "currency": "USD",
+        "pricingType": "fixed",
         "isActive": true
       },
       {
         "name": "Transporte de Invitados",
         "description": "Transporte para invitados en vehículos cómodos (van ejecutiva o autobús). Incluye chofer profesional, aire acondicionado, sistema de sonido, coordinación de horarios y servicio puerta a puerta. Perfecto para trasladar grupos de invitados desde hoteles o puntos de encuentro.",
-        "price": 150,
+        "basePrice": 150,
+        "currency": "USD",
+        "pricingType": "fixed",
         "isActive": true
       },
       {
         "name": "Flota Completa",
         "description": "Servicio completo de transporte para todo el evento. Incluye limusina para novios, transporte para invitados, coordinación completa de horarios, choferes profesionales uniformados, decoración floral en vehículos principales y servicio de 8 horas. Perfecto para bodas con múltiples ubicaciones.",
-        "price": 800,
+        "basePrice": 800,
+        "currency": "USD",
+        "pricingType": "fixed",
         "isActive": true
       }
     ],
@@ -589,19 +607,25 @@
       {
         "name": "Decoración Completa Salón",
         "description": "Decoración completa del salón de eventos con estilo moderno. Incluye diseño 3D personalizado, instalación de estructuras decorativas, iluminación LED ambiental, centros de mesa modernos, decoración de mesas, arcos minimalistas, decoración de paredes, alfombras decorativas y coordinación completa. Incluye consultoría de diseño y renderizados 3D.",
-        "price": 2000,
+        "basePrice": 2000,
+        "currency": "USD",
+        "pricingType": "fixed",
         "isActive": true
       },
       {
         "name": "Centros de Mesa Modernos",
         "description": "Centros de mesa con diseño moderno y minimalista. Incluye bases de mármol, cristal o metal, flores frescas o artificiales, velas LED, elementos decorativos modernos y diferentes alturas. Diseños personalizados según el tema del evento. Incluye instalación y coordinación.",
-        "price": 80,
+        "basePrice": 80,
+        "currency": "USD",
+        "pricingType": "per_item",
         "isActive": true
       },
       {
         "name": "Iluminación Ambiental",
         "description": "Sistema de iluminación ambiental para crear atmósfera especial. Incluye luces LED de colores, iluminación de ambiente, focos direccionales, luces de mesa, iluminación de pasillos, efectos de luz dinámicos y sincronización con música. Perfecto para crear ambientes únicos y memorables.",
-        "price": 500,
+        "basePrice": 500,
+        "currency": "USD",
+        "pricingType": "fixed",
         "isActive": true
       }
     ],
